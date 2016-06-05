@@ -1,0 +1,19 @@
+doctype html
+html(lang="en")
+  head
+    if pageTitle
+      title #{pageTitle} - Godzilla
+    else
+      title Godzilla
+    link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+    link(rel="stylesheet" href="/styles/master.css")
+  body
+    div.container
+      header
+        h1.text-center Godzilla Monster Database and Community
+      main
+        block content
+    script(src="//code.jquery.com/jquery-1.12.4.min.js")
+    script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/superagent/1.2.0/superagent.min.js")
+    script(src="/scripts/app.js")
