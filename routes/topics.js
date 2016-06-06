@@ -24,4 +24,24 @@ router
 
         response.json(responseObject);
       });
+  })
+
+  .get('/api/topics/:category/:subcategory', (request, response) => {
+    Topic
+      .findOne({
+        subcategory:{}
+      })
+      .then(topic => {
+        let responseObject = {
+          status: 'error',
+          result: `SUBCATEGORY NOT FOUND: ${req.params.subcategory} does not exist.`
+        };
+
+        if (topic) {
+          responseObject.status = 'success';
+          responseObject.result = topic;
+        }
+
+        response.json(responseObject);
+      });
   });
