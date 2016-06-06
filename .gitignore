@@ -101,4 +101,4 @@ $RECYCLE.BIN/
 
 ### Misc ###
 public/**
-.env
+.env*
