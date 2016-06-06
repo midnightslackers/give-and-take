@@ -6,7 +6,7 @@ const topicSchema = new mongoose.Schema({
     required: true,
     enum: []
   },
-  subcategories: []
+  subcategories: [String]
   
 });
 

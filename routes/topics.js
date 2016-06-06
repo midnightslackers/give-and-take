@@ -9,15 +9,33 @@ router
 
 // Retrieve all Users by Topic
 
-  .get('/api/topics/:category', (req, res) => {
+  .get('/', (req, res) => {
+    Topic
+      .find({})
+      .then(topic => {
+        let resObj = {
+          status: 'error',
+          result: `No Topics Added.`
+        };
+
+        if (topic.length > 0) {
+          resObj.status = 'success';
+          resObj.result = topic;
+        }
+
+        res.json(resObj);
+      });
+  })
+
+  .get('/:topic', (req, res) => {
     Topic
       .findOne({
-        category: {}
+        name: req.params.topic
       })
       .then(topic => {
         let resObj = {
           status: 'error',
-          result: `TOPIC NOT FOUND: ${req.params.category} does not exist.`
+          result: `TOPIC NOT FOUND: ${req.params.topic} does not exist.`
         };
 
         if (topic) {
@@ -31,12 +49,15 @@ router
 
 //Retrieve all Users by Topic Subcategory
 
-  .get('/api/topics/:category/:subcategory', (req, res) => {
+  .get('/:topic', (req, res) => {
     Topic
       .findOne({
-        subcategory:{}
+        name: req.params.topic
       })
       .then(topic => {
+        
+        
+        
         let resObj = {
           status: 'error',
           result: `SUBCATEGORY NOT FOUND: ${req.params.subcategory} does not exist.`
@@ -47,7 +68,7 @@ router
           resObj.result = topic;
         }
 
-        res.json(responseObject);
+        res.json(resObject);
       });
   });
 
@@ -55,7 +76,27 @@ router
 
 router
     .use(jsonParser)
-    .post('/api/topics/:category/:subcategory',(req, res) => {
+    .post('/:topic', (req, res) => {
+      Topic 
+        .findOne({name: req.params.topic})
+        .then(topic => {
+          topic.subcategories.push(req.body.name);
+          return topic.save();
+        })
+        .then(topic => {
+          res.json({status: 'success', result: topic});
+        }).catch(err => {
+          res.json({
+            status:'error',
+            result: err
+          });
+        });
+    });
+    
+// Temp POST major topics ADMIN ONLY***
+router
+    .use(jsonParser)
+    .post('/', (req, res) => {
       new Topic(req.body)
         .save()
         .then(topic => {
@@ -64,7 +105,7 @@ router
             result: topic
           });
         }).catch(err => {
-          let key = Object.keys(err.errors);
+          let key = Object.keys(err.errors)[0];
 
           res.json({
             status:'error',
@@ -72,3 +113,5 @@ router
           });
         });
     });
+    
+module.exports = router;
