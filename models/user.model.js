@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
 
 const userSchema = new mongoose.Schema({
-  username : {
+  username : { 
     type: String,
     required: true
   },
@@ -13,7 +13,23 @@ const userSchema = new mongoose.Schema({
   admin : {
     type: Boolean,
     default: false
+  },
+  fullName : {
+    type: String
+  },
+  gender : {
+    type: String,
+    enum: ['male', 'female']
+  },
+  ratio : {
+    type: Number,
+    default: 0
+  },
+  skills: {
+    type: Schema.Types.ObjectId,
+    ref: 'Topic' 
   }
+  
 }, {
   timestamps: true
 });
