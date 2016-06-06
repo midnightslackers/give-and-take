@@ -1,9 +1,8 @@
-const config = require('./lib/config');
 const app = require('./lib/app');
 const database = require('./lib/database');
 
-database.connect(config.mongodb_uri);
+database.connect(process.env.MONGODB_URI);
 
-app.listen(config.port, () => {
-  console.log(`Magic happens at http://localhost:${config.port}/`);
+app.listen(process.env.PORT, () => {
+  console.log(`Magic happens at http://localhost:${process.env.PORT}/`);
 });
