@@ -9,45 +9,45 @@ router
 
 // Retrieve all Users by Topic
 
-  .get('/api/topics/:category', (request, response) => {
+  .get('/api/topics/:category', (req, res) => {
     Topic
       .findOne({
         category: {}
       })
       .then(topic => {
-        let responseObject = {
+        let resObj = {
           status: 'error',
           result: `TOPIC NOT FOUND: ${req.params.category} does not exist.`
         };
 
         if (topic) {
-          responseObject.status = 'success';
-          responseObject.result = topic;
+          resObj.status = 'success';
+          resObj.result = topic;
         }
 
-        response.json(responseObject);
+        res.json(resObj);
       });
   })
 
 //Retrieve all Users by Topic Subcategory
 
-  .get('/api/topics/:category/:subcategory', (request, response) => {
+  .get('/api/topics/:category/:subcategory', (req, res) => {
     Topic
       .findOne({
         subcategory:{}
       })
       .then(topic => {
-        let responseObject = {
+        let resObj = {
           status: 'error',
           result: `SUBCATEGORY NOT FOUND: ${req.params.subcategory} does not exist.`
         };
 
         if (topic) {
-          responseObject.status = 'success';
-          responseObject.result = topic;
+          resObj.status = 'success';
+          resObj.result = topic;
         }
 
-        response.json(responseObject);
+        res.json(responseObject);
       });
   });
 
@@ -55,11 +55,11 @@ router
 
 router
     .use(jsonParser)
-    .post('/api/topics/:category/:subcategory',(request, response) => {
-      new Topic(request.body)
+    .post('/api/topics/:category/:subcategory',(req, res) => {
+      new Topic(req.body)
         .save()
         .then(topic => {
-          response.json({
+          res.json({
             status:'posted',
             result: topic
           });
