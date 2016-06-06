@@ -8,8 +8,8 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "mocha",
-    "dev": "nodemon index.js"
+    "dev": "gulp dev",
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
@@ -40,6 +40,10 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
+    "gulp-nodemon": "^2.0.7",
     "mocha": "^2.5.3",
     "nodemon": "^1.9.2"
   }
