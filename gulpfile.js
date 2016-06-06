@@ -18,11 +18,9 @@ gulp.task('run-test', () => {
 gulp.task('run-nodemon', () => {
   nodemon({
     script: 'index.js',
-    ext: 'js',
-    tasks: ['run-lint', 'run-test']
+    ext: 'js'
   });
 });
 
-// gulp.task('default', ['run-nodemon']);
 gulp.task('dev', ['run-nodemon']);
 gulp.task('test', ['run-lint', 'run-test']);
