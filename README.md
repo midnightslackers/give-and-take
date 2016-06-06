@@ -12,12 +12,6 @@ Description about Give and Take.
 GET /api/topics/:category
 ```
 
-#### Create Topic Category
-
-```
-POST /api/topics/:category
-```
-
 #### Retrieve All Users by Topic Category and Subcategory
 
 ```
