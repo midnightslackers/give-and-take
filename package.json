@@ -8,8 +8,8 @@
   },
   "scripts": {
     "start": "env $(cat .env) node index.js",
-    "dev": "gulp dev",
-    "test": "gulp test"
+    "dev": "env $(cat .env) gulp dev",
+    "test": "env $(cat .env) gulp test"
   },
   "repository": {
     "type": "git",
