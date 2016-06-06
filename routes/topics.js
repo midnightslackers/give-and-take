@@ -6,6 +6,9 @@ const router = express.Router();
 const jsonParser = bodyParser.json();
 
 router
+
+// Retrieve all Users by Topic
+
   .get('/api/topics/:category', (request, response) => {
     Topic
       .findOne({
@@ -26,6 +29,8 @@ router
       });
   })
 
+//Retrieve all Users by Topic Subcategory
+
   .get('/api/topics/:category/:subcategory', (request, response) => {
     Topic
       .findOne({
@@ -45,3 +50,25 @@ router
         response.json(responseObject);
       });
   });
+
+//create new Subcategory in Topics
+
+router
+    .use(jsonParser)
+    .post('/api/topics/:category/:subcategory',(request, response) => {
+      new Topic(request.body)
+        .save()
+        .then(topic => {
+          response.json({
+            status:'posted',
+            result: topic
+          });
+        }).catch(err => {
+          let key = Object.keys(err.errors);
+
+          res.json({
+            status:'error',
+            result: err.errors[key].message
+          });
+        });
+    });
