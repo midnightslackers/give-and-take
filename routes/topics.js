@@ -45,32 +45,8 @@ router
 
         res.json(resObj);
       });
-  })
-
-//Retrieve all Users by Topic Subcategory
-
-  .get('/:topic', (req, res) => {
-    Topic
-      .findOne({
-        name: req.params.topic
-      })
-      .then(topic => {
-        
-        
-        
-        let resObj = {
-          status: 'error',
-          result: `SUBCATEGORY NOT FOUND: ${req.params.subcategory} does not exist.`
-        };
-
-        if (topic) {
-          resObj.status = 'success';
-          resObj.result = topic;
-        }
-
-        res.json(resObject);
-      });
   });
+
 
 //create new Subcategory in Topics
 

@@ -57,11 +57,9 @@ router
           result: user
         });
       }).catch(err => {
-        let key = Object.keys(err.errors);
-
         res.json({
           status: 'error',
-          result: err.errors[key].message
+          result: err
         });
       });
   })
@@ -79,11 +77,9 @@ router
         });
       })
       .catch(err => {
-        let key = Object.keys(err.errors);
-
         res.json({
           status: 'error',
-          result: err.errors[key].message
+          result: err
         });
       });
   })
@@ -101,11 +97,9 @@ router
         });
       })
       .catch(err => {
-        let key = Object.keys(err.errors);
-
         res.json({
           status: 'error',
-          result: err.errors[key].message
+          result: err
         });
       });
   })
