@@ -8,7 +8,7 @@ const User = require('../models/user.model');
 const assert = chai.assert;
 
 chai.use(chaiHttp);
-database.connect(config.dbUri);
+database.connect(config.mongodb_uri);
 
 describe('End to End Testing', () => {
   let request;
