@@ -4,6 +4,32 @@ Description about Give and Take.
 
 ## API
 
+### Topics
+
+#### Retrieve All Users by Topic Category
+
+```
+GET /api/topics/:category
+```
+
+#### Create Topic Category
+
+```
+POST /api/topics/:category
+```
+
+#### Retrieve All Users by Topic Category and Subcategory
+
+```
+GET /api/topics/:category/:subcategory
+```
+
+#### Create Topic Subcategory
+
+```
+POST /api/topics/:category/:subcategory
+```
+
 ### Users
 
 #### Retrieve All Users
@@ -32,14 +58,14 @@ POST /api/users
 
 ##### Input
 
-| Name               | Type     | Description |
-| ------------------ | -------- | ----------- |
-| `first_name`       | `string` | The first name of a user. |
-| `last_name`        | `string` | The last name of a user.  |
-| `gender`           | `string` | Either `male` or `female` for this user. |
-| `email`            | `string` | An `email` will be used for this user to log into their account. |
-| `password`         | `string` | A secret `password` for this user to log into their account. |
-| `confirm_password` | `string` | Matches `password` for confirmation. |
+| Name                | Type     | Description |
+| ------------------- | -------- | ----------- |
+| `first_name`        | `string` | The first name of a user. |
+| `last_name`         | `string` | The last name of a user.  |
+| `gender`            | `string` | Either `male` or `female` for this user. |
+| `email`             | `string` | An `email` will be used for this user to log into their account. |
+| `password`          | `string` | A secret `password` for this user to log into their account. |
+| `confirm_password`  | `string` | Matches `password` for confirmation. |
 
 #### Modify User
 
