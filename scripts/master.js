@@ -16,9 +16,8 @@ $(function () {
       localStorage.token = data.result;
       window.location.assign('/dashboard');
     }).fail(function(data){
-
-
-      $('.nav-tabs').before('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+data.result+'</div>');
+      var err = JSON.parse(data.responseText);
+      $('.nav-tabs').before('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+err.result+'</div>');
     });
   });
 });

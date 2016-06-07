@@ -71,13 +71,13 @@ router
               .then(token => {
                 res.json({status: 'success', result: token});
               })
-              .catch(err => {
-                res.json({status: 'error', result: err});
+              .catch(() => {
+                res.json({status: 'error', result: 'The UserName and Password does not match'});
               });
         // res.json({status: 'success', result: 'LOGGED IN BB!'});
       })
-      .catch(err => {
-        res.json({status: 'error', result: err});
+      .catch(() => {
+        res.json({status: 'error', result: 'The UserName and Password does not match'});
       });
 
   });
