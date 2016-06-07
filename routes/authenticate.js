@@ -1,7 +1,10 @@
-const router = require('express').Router();
-const jsonParser = require('body-parser').json();
-const User = require('../models/user.model');
+const express = require('express');
+const bodyParser = require('body-parser');
 const token = require('../lib/token');
+const User = require('../models/user.model');
+
+const router = module.exports = express.Router();
+const jsonParser = bodyParser.json();
 
 router
   .post('/register', jsonParser, (req, res) => {
@@ -78,6 +81,3 @@ router
       });
 
   });
-
-
-module.exports = router;

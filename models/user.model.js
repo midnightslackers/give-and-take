@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs');
 
-const userSchema = new mongoose.Schema({
-  username : { 
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
+  username : {
     type: String,
     required: true
   },
@@ -28,18 +29,17 @@ const userSchema = new mongoose.Schema({
   },
   skills: {
     type: Schema.Types.ObjectId,
-    ref: 'Topic' 
+    ref: 'Topic'
   }
-  
 }, {
   timestamps: true
 });
 
-userSchema.methods.makeHash = function(pw) {
+userSchema.methods.makeHash = (pw) => {
   return this.password = bcrypt.hashSync(pw);
 };
 
-userSchema.methods.checkHash = function(pw) {
+userSchema.methods.checkHash = (pw) => {
   return bcrypt.compareSync(pw, this.password);
 };
 

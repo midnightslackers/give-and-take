@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const User = require('../models/user.model');
 const regex = require('../lib/regex.js');
+const User = require('../models/user.model');
 
-const router = express.Router();
+const router = module.exports = express.Router();
 const jsonParser = bodyParser.json();
 
 router
@@ -122,5 +122,3 @@ router
         res.json(resObj);
       });
   });
-
-module.exports = router;

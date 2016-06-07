@@ -2,20 +2,18 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Topic = require('../models/topic.model');
 
-const router = express.Router();
+const router = module.exports = express.Router();
 const jsonParser = bodyParser.json();
 
 router
-
-// Retrieve all Users by Topic
-
+  // Retrieve all Users by Topic
   .get('/', (req, res) => {
     Topic
       .find({})
       .then(topic => {
         let resObj = {
           status: 'error',
-          result: `No Topics Added.`
+          result: 'No Topics Added.'
         };
 
         if (topic.length > 0) {
@@ -26,7 +24,6 @@ router
         res.json(resObj);
       });
   })
-
   .get('/:topic', (req, res) => {
     Topic
       .findOne({
@@ -47,13 +44,11 @@ router
       });
   });
 
-
 //create new Subcategory in Topics
-
 router
     .use(jsonParser)
     .post('/:topic', (req, res) => {
-      Topic 
+      Topic
         .findOne({name: req.params.topic})
         .then(topic => {
           topic.subcategories.push(req.body.name);
@@ -68,7 +63,7 @@ router
           });
         });
     });
-    
+
 // Temp POST major topics ADMIN ONLY***
 router
     .use(jsonParser)
@@ -89,5 +84,3 @@ router
           });
         });
     });
-    
-module.exports = router;
