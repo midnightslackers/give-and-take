@@ -1,0 +1,31 @@
+extends ../layouts/default.layout.pug
+
+block content
+  div.row
+    div.col-xs-12.col-sm-6.col-sm-offset-3
+      ul.nav.nav-tabs.nav-justified(role="tablist")
+        li.active(role="presentation")
+          a(href="#register" role="tab" data-toggle="tab" aria-controls="register") Create an account
+        li(role="presentation")
+          a(href="#login" role="tab" data-toggle="tab" aria-controls="login") Log In
+      div.tab-content
+        div#register.tab-pane.active(role="tabpanel")
+          form(action="/register" method="post")
+            div.form-group
+              label(for="register-username") Username
+              input.form-control(type="input" name="username" id="register-username" autocomplete="off")
+            div.form-group
+              label(for="password") Password
+              input.form-control(type="password" name="password" id="register-password" autocomplete="off")
+            div.form-group
+              input.btn.btn-primary(type="submit" value="Register")
+        div#login.tab-pane(role="tabpanel")
+          form(action="/login" method="post")
+            div.form-group
+              label(for="login-username") Username
+              input.form-control(type="input" name="username" id="login-username" autocomplete="off")
+            div.form-group
+              label(for="login-password") Password
+              input.form-control(type="password" name="password" id="login-password" autocomplete="off")
+            div.form-group
+              input.btn.btn-primary(type="submit" value="Log In")
