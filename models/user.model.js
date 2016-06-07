@@ -35,11 +35,11 @@ const userSchema = new Schema({
   timestamps: true
 });
 
-userSchema.methods.makeHash = (pw) => {
+userSchema.methods.makeHash = function (pw) {
   return this.password = bcrypt.hashSync(pw);
 };
 
-userSchema.methods.checkHash = (pw) => {
+userSchema.methods.checkHash = function (pw) {
   return bcrypt.compareSync(pw, this.password);
 };
 
