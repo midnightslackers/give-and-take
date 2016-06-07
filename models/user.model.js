@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
-
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -27,10 +26,10 @@ const userSchema = new Schema({
     type: Number,
     default: 0
   },
-  skills: {
+  skills: [{
     type: Schema.Types.ObjectId,
     ref: 'SubTopic'
-  }
+  }]
 }, {
   timestamps: true
 });
