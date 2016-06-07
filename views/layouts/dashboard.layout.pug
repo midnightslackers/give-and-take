@@ -26,6 +26,25 @@ html(lang="en")
                 a(href="#") About
               li
                 a(href="#") Log Out
+      aside
+        h2 Filter
+        div.form-group
+          label(for="Filter-Topics") Topics
+          select.form-control#Filter-Topics(name="topics")
+        div.form-group
+          label(for="Filter-Subtopics") Subtopics
+          select.form-control#Filter-Subtopics(name="subtopics")
+        div.form-group
+          label(for="Filter-Gender") Gender
+          div.radio
+            label(for="Filter-Gender-Female")
+              input#Filter-Gender-Female(type="radio" name="gender" value="female")
+              span Female
+            label(for="Filter-Gender-Male")
+              input#Filter-Gender-Male(type="radio" name="gender" value="Male")
+              span Male
+
+
       main
         block content
     script(src="//code.jquery.com/jquery-1.12.4.min.js")
