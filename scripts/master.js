@@ -1,5 +1,4 @@
 $(function () {
-
   $('form').on('submit', function(e){
     e.preventDefault();
 
@@ -14,22 +13,12 @@ $(function () {
       type: 'POST'
     }
     ).done(function(data) {
-      console.log(e.target.action);
-      console.log(data);
-      if (data.status === 'success' && data.result) {
-        localStorage.token = data.result;
-        window.location.assign('/dashboard');
-      } else {
-        var error = err;
+      localStorage.token = data.result;
+      window.location.assign('/dashboard');
+    }).fail(function(data){
 
-        if (data.result.message !== undefined) {
-          error = data.result.message;
-        }else if(data.result){
-          error = data.result;
-        }
 
-        $('.nav-tabs').before('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+error+'</div>');
-      }
+      $('.nav-tabs').before('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+data.result+'</div>');
     });
   });
 });
