@@ -30,6 +30,7 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "foreman": "^1.4.1",
     "jsonwebtoken": "^7.0.0",
     "mongodb": "^2.1.21",
     "mongoose": "^4.4.19",
@@ -40,7 +41,6 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
-    "foreman": "^1.4.1",
     "gulp": "^3.9.1",
     "gulp-eslint": "^2.0.0",
     "gulp-mocha": "^2.2.0",
