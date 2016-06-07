@@ -5,10 +5,8 @@ const Schema = mongoose.Schema;
 const topicSchema = new Schema({
   name: {
     type: String,
-    required: true,
-    enum: []
-  },
-  subcategories: [String]
+    required: true
+  }
 });
 
 const topicModel = mongoose.model('Topic', topicSchema);

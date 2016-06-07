@@ -29,7 +29,7 @@ const userSchema = new Schema({
   },
   skills: {
     type: Schema.Types.ObjectId,
-    ref: 'Topic'
+    ref: 'SubTopic'
   }
 }, {
   timestamps: true
