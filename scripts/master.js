@@ -14,7 +14,9 @@ $(function () {
       type: 'POST'
     }
     ).done(function(data) {
-      if (data.status == 'success' && data.result) {
+      console.log(e.target.action);
+      console.log(data);
+      if (data.status === 'success' && data.result) {
         localStorage.token = data.result;
         window.location.assign('/dashboard');
       } else {
