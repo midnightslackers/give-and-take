@@ -8,8 +8,8 @@
   },
   "scripts": {
     "start": "nf start web",
-    "dev": "nf start dev",
-    "test": "nf start test"
+    "test": "nf start test",
+    "dev": "nf start dev"
   },
   "repository": {
     "type": "git",
@@ -35,8 +35,7 @@
     "mongodb": "^2.1.21",
     "mongoose": "^4.4.19",
     "pug": "^2.0.0-beta2",
-    "sendgrid": "^2.0.0",
-    "stylus": "^0.54.5"
+    "sendgrid": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -45,7 +44,9 @@
     "gulp-eslint": "^2.0.0",
     "gulp-mocha": "^2.2.0",
     "gulp-nodemon": "^2.0.7",
+    "gulp-stylus": "^2.4.0",
     "mocha": "^2.5.3",
-    "nodemon": "^1.9.2"
+    "nodemon": "^1.9.2",
+    "stylus": "^0.54.5"
   }
 }
