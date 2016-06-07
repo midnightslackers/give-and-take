@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Description about Give and Take.",
   "main": "index.js",
+  "engines": {
+    "node": "6.2.1"
+  },
   "directories": {
     "test": "test"
   },
