@@ -44,12 +44,20 @@ gulp.task('run-test', () => {
     .pipe(mocha());
 });
 
+gulp.task('watch-scripts', () => {
+  return gulp.watch(['./scripts/**/*.js'], ['run-concat-uglify']);
+});
+
+gulp.task('watch-styles', () => {
+  return gulp.watch(['./styles/**/*.styl'], ['run-stylus']);
+});
+
 gulp.task('build', ['run-clean'], () => {
   return gulp.start(['run-stylus', 'run-concat-uglify']);
 });
 
 gulp.task('dev', ['build'], () => {
-  return gulp.start(['run-nodemon']);
+  return gulp.start(['run-nodemon', 'watch-styles', 'watch-scripts']);
 });
 
 gulp.task('test', ['build'], () => {
