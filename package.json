@@ -1,0 +1,50 @@
+{
+  "name": "give-and-take",
+  "version": "0.0.1",
+  "description": "Description about Give and Take.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "env $(cat .env) node index.js",
+    "dev": "env $(cat .env) gulp dev",
+    "test": "env $(cat .env) gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/midnightslackers/give-and-take.git"
+  },
+  "author": "Midnight Slackers (https://github.com/midnightslackers)",
+  "contributors": [
+    "Yvonne Hayes (https://github.com/YvonneHayes)",
+    "Don Chatelain (https://github.com/DonChatelain)",
+    "Johnny Luangphasy (https://github.com/jluangphasy)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/midnightslackers/give-and-take/issues"
+  },
+  "homepage": "https://github.com/midnightslackers/give-and-take#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "jsonwebtoken": "^7.0.0",
+    "mongodb": "^2.1.21",
+    "mongoose": "^4.4.19",
+    "pug": "^2.0.0-beta2",
+    "sendgrid": "^2.0.0",
+    "stylus": "^0.54.5"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
+    "gulp-nodemon": "^2.0.7",
+    "mocha": "^2.5.3",
+    "nodemon": "^1.9.2"
+  }
+}
