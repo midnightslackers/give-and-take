@@ -6,7 +6,7 @@ const router = module.exports = express.Router();
 const jsonParser = bodyParser.json();
 
 router
-  // Retrieve all Users by Topic
+  // Retrieve all topics
   .get('/', (req, res) => {
     Topic
       .find({})
@@ -24,10 +24,10 @@ router
         res.json(resObj);
       });
   })
-  .get('/:topic', (req, res) => {
+  .get('/:topicId', (req, res) => {
     Topic
       .findOne({
-        name: req.params.topic
+        _id: req.params.topicId
       })
       .then(topic => {
         let resObj = {
