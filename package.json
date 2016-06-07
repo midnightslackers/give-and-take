@@ -7,9 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "start": "env $(cat .env) node index.js",
-    "dev": "env $(cat .env) gulp dev",
-    "test": "env $(cat .env) gulp test"
+    "start": "nf start web",
+    "dev": "nf start dev",
+    "test": "nf start test"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "foreman": "^1.4.1",
     "jsonwebtoken": "^7.0.0",
     "mongodb": "^2.1.21",
     "mongoose": "^4.4.19",

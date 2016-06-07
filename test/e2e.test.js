@@ -95,7 +95,7 @@ describe('End to End Testing', () => {
       let myPassword = '123';
 
       request
-        .post('/users')
+        .post('/api/users')
         .set('content-type', 'application/json')
         .set('token', token)
         .send({
@@ -126,7 +126,7 @@ describe('End to End Testing', () => {
       let myPassword = 'abc';
 
       request
-        .post('/users')
+        .post('/api/users')
         .set('content-type', 'application/json')
         .set('token', token)
         .send({
@@ -135,7 +135,7 @@ describe('End to End Testing', () => {
         })
         .then(() => {
           request
-            .get('/users')
+            .get('/api/users')
             .set('content-type', 'application/json')
             .set('token', token)
             .end((err, res) => {
@@ -150,7 +150,7 @@ describe('End to End Testing', () => {
 
     it('Gets all users', done => {
       request
-        .get('/users')
+        .get('/api/users')
         .set('content-type', 'application/json')
         .set('token', token)
         .then(res => {
@@ -175,17 +175,17 @@ describe('End to End Testing', () => {
     });
 
     it('Throws specific validation error on name requirement', done => {
-      let expected = 'Path `username` is required.';
+      let expected = 'User validation failed';
 
       request
-        .post('/users')
+        .post('/api/users')
         .set('content-type', 'application/json')
         .set('token', token)
         .send({'password': 'secret123'})
         .end((err, res) => {
           let resObj = JSON.parse(res.text);
 
-          assert.deepEqual(resObj.result, expected);
+          assert.equal(resObj.result.message, expected);
 
           done();
         });
@@ -193,7 +193,7 @@ describe('End to End Testing', () => {
 
     it('Gets one user', done => {
       request
-        .get('/users/johnny')
+        .get('/api/users/johnny')
         .set('content-type', 'application/json')
         .set('token', token)
         .end((err, res) => {
@@ -207,7 +207,7 @@ describe('End to End Testing', () => {
 
     it('Puts "jluangphasy" as new username for johnny', done => {
       request
-        .put('/users/Johnny')
+        .put('/api/users/Johnny')
         .set('content-type', 'application/json')
         .set('token', token)
         .send({
@@ -215,7 +215,7 @@ describe('End to End Testing', () => {
         })
         .then(() => {
           request
-            .get('/users/jluangphasy')
+            .get('/api/users/jluangphasy')
             .set('content-type', 'application/json')
             .set('token', token)
             .end((err, res) => {
@@ -230,22 +230,22 @@ describe('End to End Testing', () => {
 
     it('Deletes one user, then all of the others', done => {
       request
-        .del('/users/jluangphasy')
+        .del('/api/users/jluangphasy')
         .set('content-type', 'application/json')
         .set('token', token)
         .then(() => {
           request
-            .del('/users/don')
+            .del('/api/users/don')
             .set('content-type', 'application/json')
             .set('token', token)
             .then(() => {
               request
-                .del(`/users/${user1.username}`)
+                .del(`/api/users/${user1.username}`)
                 .set('content-type', 'application/json')
                 .set('token', token)
                 .then(() => {
                   request
-                    .get('/users')
+                    .get('/api/users')
                     .set('content-type', 'application/json')
                     .set('token', token)
                     .end((err, res) => {
