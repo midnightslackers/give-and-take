@@ -13,9 +13,16 @@ gulp.task('run-clean', () => {
     .pipe(clean());
 });
 
-gulp.task('run-concat-uglify', () => {
+gulp.task('run-concat-uglify-master', () => {
   return gulp.src(['./scripts/master.js'])
     .pipe(concat('master.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('./public/scripts'));
+});
+
+gulp.task('run-concat-uglify-dashboard', () => {
+  return gulp.src(['./scripts/dashboard.js'])
+    .pipe(concat('dashboard.js'))
     .pipe(uglify())
     .pipe(gulp.dest('./public/scripts'));
 });
@@ -41,7 +48,7 @@ gulp.task('run-nodemon', () => {
 });
 
 gulp.task('run-stylus', () => {
-  return gulp.src('./styles/master.styl')
+  return gulp.src(['./styles/master.styl', './styles/dashboard.styl'])
     .pipe(stylus({compress: true}))
     .pipe(gulp.dest('./public/styles'));
 });
@@ -56,7 +63,7 @@ gulp.task('watch-images', () => {
 });
 
 gulp.task('watch-scripts', () => {
-  return gulp.watch(['./scripts/**/*.js'], ['run-concat-uglify']);
+  return gulp.watch(['./scripts/**/*.js'], ['run-concat-uglify-master', 'run-concat-uglify-dashboard']);
 });
 
 gulp.task('watch-styles', () => {
@@ -64,7 +71,7 @@ gulp.task('watch-styles', () => {
 });
 
 gulp.task('build', ['run-clean'], () => {
-  return gulp.start(['run-stylus', 'run-concat-uglify', 'run-imagemin']);
+  return gulp.start(['run-imagemin', 'run-stylus', 'run-concat-uglify-master', 'run-concat-uglify-dashboard']);
 });
 
 gulp.task('dev', ['build'], () => {
