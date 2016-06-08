@@ -2,12 +2,12 @@ doctype html
 html(lang="en")
   head
     if pageTitle
-      title #{pageTitle} - Give|Take
+      title #{pageTitle} - Give and Take
     else
       title Give and Take
     link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
     link(rel="stylesheet" href="/styles/master.css")
-  body
+  body.page--dashboard
     div.container-fluid
       header
         nav.navbar.navbar-default
@@ -23,7 +23,7 @@ html(lang="en")
               li
                 a(href="#")= UserName
               li
-                a(href="#") About
+                a(href="/about") About
               li
                 a(href="#") Log Out
       aside
@@ -43,10 +43,9 @@ html(lang="en")
             label(for="Filter-Gender-Male")
               input#Filter-Gender-Male(type="radio" name="gender" value="Male")
               span Male
-
-
       main
         block content
     script(src="//code.jquery.com/jquery-1.12.4.min.js")
     script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js")
     script(src="/scripts/master.js")

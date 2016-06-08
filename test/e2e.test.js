@@ -5,29 +5,27 @@ const app = require('../lib/app');
 const User = require('../models/user.model');
 
 const assert = chai.assert;
+const databaseConnection = database.connect(process.env.MONGODB_URI);
 
 chai.use(chaiHttp);
-database.connect(process.env.MONGODB_URI);
 
 describe('End to End Testing', () => {
-  let request;
+  let request = chai.request(app);
   let token;
   let user1 = {username: 'user1', password: 'test123'};
 
   before(done => {
-    request = chai.request(app);
-    done();
-  });
-
-  describe('Authentication', () => {
-    before(done => {
+    databaseConnection.on('open', () => {
       User.remove({})
         .then(done());
     });
+  });
+
+  describe('Authentication', () => {
 
     it ('registers new user on /register', done => {
       request
-        .post('/register')
+        .post('/api/auth/register')
         .send(user1)
         .end((err, res) => {
           const actual = JSON.parse(res.text);
@@ -41,7 +39,7 @@ describe('End to End Testing', () => {
     it ('error on duplicate username input on /register', done => {
       const expected = 'Username: user1 already exists';
       request
-        .post('/register')
+        .post('/api/auth/register')
         .send(user1)
         .end((err, res) => {
           const actual = JSON.parse(res.text);
@@ -53,7 +51,7 @@ describe('End to End Testing', () => {
 
     it ('user success on /login', done => {
       request
-        .post('/login')
+        .post('/api/auth/login')
         .send(user1)
         .end((err, res) => {
           const actual = JSON.parse(res.text);
@@ -64,7 +62,7 @@ describe('End to End Testing', () => {
 
     it ('error on password mismatch on /login', done => {
       request
-        .post('/login')
+        .post('/api/auth/login')
         .send({username: 'user1', password: 'wrong'})
         .end((err, res) => {
           const actual = JSON.parse(res.text);
@@ -76,7 +74,7 @@ describe('End to End Testing', () => {
 
     it ('error on bad username on /login', done => {
       request
-        .post('/login')
+        .post('/api/auth/login')
         .send({username: 'not_a_user', password: 'test123'})
         .end((err, res) => {
           const actual = JSON.parse(res.text);
@@ -260,6 +258,11 @@ describe('End to End Testing', () => {
         });
     });
 
+  });
+
+  after(done => {
+    process.exit(0);
+    done();
   });
 
 });
