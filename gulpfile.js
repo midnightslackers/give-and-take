@@ -28,7 +28,7 @@ gulp.task('run-concat-uglify-dashboard', () => {
 });
 
 gulp.task('run-imagemin', () => {
-  return gulp.src('./images/*')
+  return gulp.src('./images/**')
 	  .pipe(imagemin())
 	  .pipe(gulp.dest('./public/images'));
 });
