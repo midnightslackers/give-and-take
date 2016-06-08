@@ -10,15 +10,17 @@ router
   .get('/', (req, res) => {
     Topic
       .find({})
-      .then(topic => {
+      .select('name')
+      .lean()
+      .then(topics => {
         let resObj = {
           status: 'error',
           result: 'No Topics Added.'
         };
 
-        if (topic.length > 0) {
+        if (topics.length > 0) {
           resObj.status = 'success';
-          resObj.result = topic;
+          resObj.result = topics;
         }
 
         res.json(resObj);
@@ -27,9 +29,9 @@ router
   // Retrieve Single Topic object 
   .get('/:topicId', (req, res) => {
     Topic
-      .findOne({
-        _id: req.params.topicId
-      })
+      .findById(req.params.topicId)
+      .populate('subTopics')
+      .lean()
       .then(topic => {
         let resObj = {
           status: 'error',
