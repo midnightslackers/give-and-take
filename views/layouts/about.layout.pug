@@ -1,0 +1,51 @@
+doctype html
+html(lang="en")
+  head
+    if pageTitle
+      title #{pageTitle} - Give and Take | About
+    else
+      title Give&Take | About
+    link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+    link(rel="stylesheet" href="/styles/master.css")
+  body.page--dashboard
+    div.container-fluid
+      header
+        nav.navbar.navbar-default
+          div.navbar-header
+            button.navbar-toggle.collapsed(data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false")
+              span.sr-only toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href="/dashboard") Give and Take
+          div.collapse.navbar-collapse#navbar-collapse
+            ul.nav.navbar-nav.navbar-right
+              li
+                a(href="#")= UserName
+              li
+                a(href="/about") About
+              li
+                a(href="#") Log Out
+
+      main
+        block content
+          div.container-fluid
+    footer
+      nav.navbar-fixed-bottom.container-fluid
+        div.navbar-footer
+          button.navbar-toggle.collapsed(data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false")
+            span.sr-only toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href="/about") 
+        div.collapse.navbar-collapse#navbar-collapse
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href="#")= UserName
+            li
+              a(href="#") Back to Top
+    script(src="//code.jquery.com/jquery-1.12.4.min.js")
+    script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js")
+    script(src="/scripts/master.js")
