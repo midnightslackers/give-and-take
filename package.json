@@ -12,7 +12,8 @@
   "scripts": {
     "start": "nf start web",
     "test": "nf start test",
-    "dev": "nf start dev"
+    "dev": "nf start dev",
+    "build": "nf start build"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,7 @@
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^2.0.0",
+    "gulp-imagemin": "^3.0.1",
     "gulp-mocha": "^2.2.0",
     "gulp-nodemon": "^2.0.7",
     "gulp-stylus": "^2.4.0",

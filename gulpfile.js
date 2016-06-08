@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const clean = require('gulp-clean');
 const concat = require('gulp-concat');
 const eslint = require('gulp-eslint');
+const imagemin = require('gulp-imagemin');
 const mocha = require('gulp-mocha');
 const nodemon = require('gulp-nodemon');
 const stylus = require('gulp-stylus');
@@ -17,6 +18,12 @@ gulp.task('run-concat-uglify', () => {
     .pipe(concat('master.js'))
     .pipe(uglify())
     .pipe(gulp.dest('./public/scripts'));
+});
+
+gulp.task('run-imagemin', () => {
+  return gulp.src('./images/*')
+	  .pipe(imagemin())
+	  .pipe(gulp.dest('./public/images'));
 });
 
 gulp.task('run-lint', () => {
@@ -44,6 +51,10 @@ gulp.task('run-test', () => {
     .pipe(mocha());
 });
 
+gulp.task('watch-images', () => {
+  return gulp.watch(['./images/*'], ['run-imagemin']);
+});
+
 gulp.task('watch-scripts', () => {
   return gulp.watch(['./scripts/**/*.js'], ['run-concat-uglify']);
 });
@@ -53,11 +64,11 @@ gulp.task('watch-styles', () => {
 });
 
 gulp.task('build', ['run-clean'], () => {
-  return gulp.start(['run-stylus', 'run-concat-uglify']);
+  return gulp.start(['run-stylus', 'run-concat-uglify', 'run-imagemin']);
 });
 
 gulp.task('dev', ['build'], () => {
-  return gulp.start(['run-nodemon', 'watch-styles', 'watch-scripts']);
+  return gulp.start(['run-nodemon', 'watch-images', 'watch-styles', 'watch-scripts']);
 });
 
 gulp.task('test', ['build'], () => {
