@@ -11,9 +11,7 @@ router
   .get('/validate', middlewares.validateToken, (req, res) => {
     res.json({
       status: 'success',
-      result: {
-        isValidToken: true
-      }
+      result: true
     });
   });
 
@@ -52,26 +50,25 @@ router
               .catch(err => {
                 res.json({
                   status: 'error',
-                  result: err
+                  result: 'Server error',
+                  error: err
                 });
               });
-            // res.json({
-            //   status: 'success',
-            //   result: `user: ${user.username} created`
-            // });
           })
           .catch(err => {
             res.status(400);
             res.json({
               status: 'error',
-              result: err
+              result: 'Something went wrong',
+              error: err
             });
           });
       }).catch(err => {
         res.status(400);
         res.json({
           status: 'error',
-          result: err
+          result: 'Something went wrong',
+          error: err
         });
       });
   });
@@ -109,24 +106,24 @@ router
 
         token.sign(foundUser)
           .then(token => {
-            res.json({status: 'success', result: token});
+            res.json({
+              status: 'success', 
+              result: token
+            });
           })
-          .catch(() => {
+          .catch(err => {
             res.json({
               status: 'error',
-              result: 'The username and password does not match.'
+              result: 'The username and password does not match.',
+              error: err
             });
           });
-
-        // res.json({
-        //   status: 'success',
-        //   result: 'LOGGED IN BB!'
-        // });
       })
-      .catch(() => {
+      .catch(err => {
         res.json({
           status: 'error',
-          result: 'The username and password does not match.'
+          result: 'The username and password does not match.',
+          error: err
         });
       });
   });
