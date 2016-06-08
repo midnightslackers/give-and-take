@@ -44,62 +44,16 @@ router
         }
 
         res.json(resObj);
-      });
-  })
-// Retrieve All SubTopics in Topic BY NAME !! (difficult)
-  .get('/:topicId/subtopics', (req, res) => { 
-    Topic
-      .findOne({
-        _id: req.params.topicId
-      })
-      .then(topic => {
-        const subList = topic.subTopics;
-        let subNames = [];
-        let count = 0;
-        let resObj = {
-          status: 'error',
-          result: `No Subtopics exist in ${topic.name}`
-        };
-        
-        if (subList.length > 0) {
-          resObj.status = 'success';
-          resObj.result = subList;
-        }
-        
-        res.json(resObj);
-                
-          // PROMISE HELL  PLZ HELP
-                
-      //   if (subList.length > 0) {
-      //     return Promise.all(subList.forEach(subId => {
-      //       SubTopic.findById(subId)
-      //         .then(sub => {
-      //           subNames.push(sub.name);
-      //           count++;
-      //           console.log(subNames, count); 
-      //           if (count === subList.length) return subNames;
-      //         });
-      //     }));
-      //   }
-        
-        
-      // })
-      // .then(data => {
-        
-      //   resObj.status = 'success';
-      //   resObj.result = data;
-        
-      //   res.json(resObj);
-        
       })
       .catch(err => {
         res.json({
           status: 'error',
-          result: err
+          result: 'Server error',
+          error: err
         });
       });
   });
-  
+
   
 // Retrieve One Subtopic in Specified topic  !!! May have to change format of result
 
@@ -122,6 +76,13 @@ router
 
         res.json(resObj);
     
+      })
+      .catch(err => {
+        res.json({
+          status: 'error',
+          result: 'Server error',
+          error: err
+        });
       });
   });
   
@@ -142,17 +103,28 @@ router
             return topic.save();
           })
           .then(topic => {
-            res.json({status: 'success', result: topic});
+            res.json({
+              status: 'success', 
+              result: topic
+            });
+          })
+          .catch(err => {
+            res.json({
+              status: 'error',
+              result: 'Server error',
+              error: err
+            });
           });
       })
       .catch(err => {
-        res.json({status: 'error', result: err});
+        res.json({
+          status: 'error', 
+          result: 'Server error',
+          error: err
+        });
       });
   });
   
-// DELETE Subtopic in particular Topic (subtopic model & topic child) !!! FUCK IT!
-
-
 
 // Temp POST major topics ADMIN ONLY***
 router
@@ -168,7 +140,8 @@ router
         }).catch(err => {
           res.json({
             status:'error',
-            result: err
+            result: 'server err',
+            error: err
           });
         });
     });

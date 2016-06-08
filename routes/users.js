@@ -22,6 +22,13 @@ router
         }
 
         res.json(resObj);
+      })
+      .catch(err => {
+        res.json({
+          status: 'error',
+          result: 'Server error',
+          error: err
+        });
       });
   })
   .get('/:username', (req, res) => {
@@ -43,6 +50,13 @@ router
         }
 
         res.json(resObj);
+      })
+      .catch(err => {
+        res.json({
+          status: 'error',
+          result: 'Server error',
+          error: err
+        });
       });
   });
 
@@ -59,7 +73,8 @@ router
       }).catch(err => {
         res.json({
           status: 'error',
-          result: err
+          result: 'User Creation Failed',
+          error: err
         });
       });
   })
@@ -72,14 +87,15 @@ router
       )
       .then(user => {
         res.json({
-          status: 'updated',
+          status: 'success',
           result: user
         });
       })
       .catch(err => {
         res.json({
           status: 'error',
-          result: err
+          result: 'Server error',
+          error: err
         });
       });
   })
@@ -92,14 +108,15 @@ router
       )
       .then(user => {
         res.json({
-          status: 'updated',
+          status: 'success',
           result: user
         });
       })
       .catch(err => {
         res.json({
           status: 'error',
-          result: err
+          result: 'Server error',
+          error: err
         });
       });
   })
@@ -115,10 +132,17 @@ router
         };
 
         if (user) {
-          resObj.status = 'deleted';
+          resObj.status = 'success';
           resObj.result = user;
         }
 
         res.json(resObj);
+      })
+      .catch(err => {
+        res.json({
+          status: 'error',
+          result: 'Server error',
+          error: err
+        });
       });
   });

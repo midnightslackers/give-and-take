@@ -173,7 +173,7 @@ describe('End to End Testing', () => {
     });
 
     it('Throws specific validation error on name requirement', done => {
-      let expected = 'User validation failed';
+      let expected = 'User Creation Failed';
 
       request
         .post('/api/users')
@@ -183,7 +183,7 @@ describe('End to End Testing', () => {
         .end((err, res) => {
           let resObj = JSON.parse(res.text);
 
-          assert.equal(resObj.result.message, expected);
+          assert.equal(resObj.result, expected);
 
           done();
         });
@@ -261,6 +261,7 @@ describe('End to End Testing', () => {
   });
 
   after(done => {
+    // databaseConnection.close();
     process.exit(0);
     done();
   });
