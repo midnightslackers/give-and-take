@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const subTopicSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   }
 });
 

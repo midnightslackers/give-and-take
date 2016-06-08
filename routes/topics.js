@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const Topic = require('../models/topic.model');
-
+const SubTopic = require('../models/subtopic.model');
 const router = module.exports = express.Router();
 const jsonParser = bodyParser.json();
 
 router
-  // Retrieve all topics
+  // Retrieve all topic Objects
   .get('/', (req, res) => {
     Topic
       .find({})
@@ -24,6 +24,7 @@ router
         res.json(resObj);
       });
   })
+  // Retrieve Single Topic object 
   .get('/:topicId', (req, res) => {
     Topic
       .findOne({
@@ -32,7 +33,7 @@ router
       .then(topic => {
         let resObj = {
           status: 'error',
-          result: `TOPIC NOT FOUND: ${req.params.topic} does not exist.`
+          result: `TOPIC NOT FOUND: ${topic.name} does not exist.`
         };
 
         if (topic) {
@@ -42,27 +43,60 @@ router
 
         res.json(resObj);
       });
+  })
+// Retrieve All SubTopics in Topic
+  .get('/:topicId/subtopics', (req, res) => {
+    Topic
+      .findOne({
+        _id: req.params.topicId
+      })
+      .then(topic => {
+        const subList = topic.subTopics;
+        let resObj = {
+          status: 'error',
+          result: `No Subtopics exist in ${topic.name}`
+        };
+        if (subList.length > 0) {
+          resObj.status = 'success';
+          resObj.result = subList;
+        }
+        res.json(resObj);
+      })
+      .catch(err => {
+        res.json({
+          status: 'error',
+          result: err
+        });
+      });
+  });
+  
+  
+// Push new subtopic into a specific topic
+
+
+router
+  .use(jsonParser)
+  .post('/:topicId', (req, res) => {
+    new SubTopic(req.body)
+      .save()
+      .then(sub => {
+        Topic
+          .findOne({
+            _id: req.params.topicId
+          })
+          .then(topic => {
+            topic.subTopics.push(sub._id);
+            return topic.save();
+          });
+      })
+      .then(topic => {
+        res.json({status: 'success!', result: topic});
+      })
+      .catch(err => {
+        res.json({status: 'error', result: err});
+      });
   });
 
-//create new Subcategory in Topics
-router
-    .use(jsonParser)
-    .post('/:topic', (req, res) => {
-      Topic
-        .findOne({name: req.params.topic})
-        .then(topic => {
-          topic.subcategories.push(req.body.name);
-          return topic.save();
-        })
-        .then(topic => {
-          res.json({status: 'success', result: topic});
-        }).catch(err => {
-          res.json({
-            status:'error',
-            result: err
-          });
-        });
-    });
 
 // Temp POST major topics ADMIN ONLY***
 router
