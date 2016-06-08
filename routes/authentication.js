@@ -19,7 +19,7 @@ router
   .post('/register', jsonParser, (req, res) => {
     const input = {
       username: req.body.username,
-      password: req.body.password
+      password: req.body.password,
     };
 
     delete req.body.password;
@@ -33,7 +33,15 @@ router
           });
         }
 
-        const newUser = new User({username: input.username});
+// ------  U S E R   C R E A T I O N  ------
+        const newUser = new User({
+          username: input.username,
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+          gender: req.body.gender,
+          zip: req.body.zip,
+          skills: req.body.skills
+        });
         newUser.makeHash(input.password);
 
         delete input.password;

@@ -13,7 +13,6 @@ $(function () {
       type: 'POST'
     }).done(function(data) {
 
-      console.dir(data);
       if (data.status === 'success') {
         localStorage.token = data.result;
         window.location.assign('/dashboard?token=' + data.result);

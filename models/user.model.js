@@ -15,7 +15,10 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
-  fullName : {
+  firstname : {
+    type: String
+  },
+  lastname: {
     type: String
   },
   gender : {
@@ -24,7 +27,7 @@ const userSchema = new Schema({
   },
   ratio : {
     type: Number,
-    default: 0
+    default: 1.00
   },
   skills: [{
     type: Schema.Types.ObjectId,
