@@ -58,33 +58,68 @@ router
           status: 'error',
           result: `No Subtopics exist in ${topic.name}`
         };
+        
         if (subList.length > 0) {
-          return Promise.all(subList.forEach(subId => {
-            SubTopic.findById(subId)
-              .then(sub => {
-                subNames.push(sub.name);
-                count++;
-                console.log(subNames, count); 
-                if (count === subList.length) return subNames;
-              });
-          }));
+          resObj.status = 'success';
+          resObj.result = subList;
         }
         
-        
-      })
-      .then(data => {
-        
-        resObj.status = 'success';
-        resObj.result = data;
-        
         res.json(resObj);
+                
+          // PROMISE HELL  PLZ HELP
+                
+      //   if (subList.length > 0) {
+      //     return Promise.all(subList.forEach(subId => {
+      //       SubTopic.findById(subId)
+      //         .then(sub => {
+      //           subNames.push(sub.name);
+      //           count++;
+      //           console.log(subNames, count); 
+      //           if (count === subList.length) return subNames;
+      //         });
+      //     }));
+      //   }
+        
+        
+      // })
+      // .then(data => {
+        
+      //   resObj.status = 'success';
+      //   resObj.result = data;
+        
+      //   res.json(resObj);
         
       })
       .catch(err => {
         res.json({
-          status: 'perror',
+          status: 'error',
           result: err
         });
+      });
+  });
+  
+  
+// Retrieve One Subtopic in Specified topic  !!! May have to change format of result
+
+router  
+  .get('/:topicId/:subTopicId', (req, res) => {
+    SubTopic 
+      .findOne({
+        _id: req.params.subTopicId
+      })
+      .then(subTopic => {
+        let resObj = {
+          status: 'error',
+          result: 'subtopic not found.'
+        };
+
+        if (subTopic) {
+          resObj.status = 'success';
+          resObj.result = subTopic;
+        }
+
+        res.json(resObj);
+    
       });
   });
   
