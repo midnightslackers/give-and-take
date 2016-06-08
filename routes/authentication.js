@@ -39,8 +39,8 @@ router
           firstname: req.body.firstname,
           lastname: req.body.lastname,
           gender: req.body.gender,
-          zip: req.body.zip,
-          skills: req.body.skills
+          zip: req.body.zip
+          // skills: req.body.skills
         });
         newUser.makeHash(input.password);
 
@@ -75,7 +75,7 @@ router
         res.status(400);
         res.json({
           status: 'error',
-          result: 'Something went wrong',
+          result: 'Something shitty went wrong',
           error: err
         });
       });

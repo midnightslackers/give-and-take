@@ -10,7 +10,7 @@ block content
           a(href="#login" role="tab" data-toggle="tab" aria-controls="login") Log In
       div.tab-content
         div#register.tab-pane.active(role="tabpanel")
-          form(action="/register" method="post")
+          form.login-form(action="/api/auth/register" method="post")
             div.form-group
               label(for="register-first-name") First Name
               input.form-control#register-first-name(type="input" name="first_name" autocomplete="off")
@@ -48,7 +48,7 @@ block content
             div.form-group
               input.btn.btn-primary(type="submit" value="Register")
         div#login.tab-pane(role="tabpanel")
-          form(action="/login" method="post")
+          form.login-form(action="/api/auth/login" method="post")
             div.form-group
               label(for="login-username") Username
               input.form-control#login-username(type="input" name="username" autocomplete="off")
