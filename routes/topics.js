@@ -44,36 +44,52 @@ router
         res.json(resObj);
       });
   })
-// Retrieve All SubTopics in Topic
-  .get('/:topicId/subtopics', (req, res) => {
+// Retrieve All SubTopics in Topic BY NAME !! (difficult)
+  .get('/:topicId/subtopics', (req, res) => { 
     Topic
       .findOne({
         _id: req.params.topicId
       })
       .then(topic => {
         const subList = topic.subTopics;
+        let subNames = [];
+        let count = 0;
         let resObj = {
           status: 'error',
           result: `No Subtopics exist in ${topic.name}`
         };
         if (subList.length > 0) {
-          resObj.status = 'success';
-          resObj.result = subList;
+          return Promise.all(subList.forEach(subId => {
+            SubTopic.findById(subId)
+              .then(sub => {
+                subNames.push(sub.name);
+                count++;
+                console.log(subNames, count); 
+                if (count === subList.length) return subNames;
+              });
+          }));
         }
+        
+        
+      })
+      .then(data => {
+        
+        resObj.status = 'success';
+        resObj.result = data;
+        
         res.json(resObj);
+        
       })
       .catch(err => {
         res.json({
-          status: 'error',
+          status: 'perror',
           result: err
         });
       });
   });
   
   
-// Push new subtopic into a specific topic
-
-
+// POST new subtopic & Push new subtopic into a specific topic
 router
   .use(jsonParser)
   .post('/:topicId', (req, res) => {
@@ -87,15 +103,18 @@ router
           .then(topic => {
             topic.subTopics.push(sub._id);
             return topic.save();
+          })
+          .then(topic => {
+            res.json({status: 'success', result: topic});
           });
-      })
-      .then(topic => {
-        res.json({status: 'success!', result: topic});
       })
       .catch(err => {
         res.json({status: 'error', result: err});
       });
   });
+  
+// DELETE Subtopic in particular Topic (subtopic model & topic child) !!! FUCK IT!
+
 
 
 // Temp POST major topics ADMIN ONLY***
@@ -110,11 +129,9 @@ router
             result: topic
           });
         }).catch(err => {
-          let key = Object.keys(err.errors)[0];
-
           res.json({
             status:'error',
-            result: err.errors[key].message
+            result: err
           });
         });
     });
