@@ -6,35 +6,59 @@
       .text(firstName);
   }
 
-  function populateTopics() {
+  (function populateTopics() {
     $.ajax({
       url: '/api/topics',
       type: 'GET',
       contentType: 'application/json',
     }).done(function (data) {
       if (data.status === 'success') {
-        var template = $('#select-option-template').html();
-
-        // TODO: handlebars
+        var topicObjList = data.result;
+        var filter = $('#filter-topic');
+        
+        $.each(topicObjList, function() {
+          filter.append($('<option />').val(this._id).text(this.name));
+        });
       }
     });
-  }
+  })();
 
-  function populateSubtopics(topicId) {
-    var ajaxUrl = '/api/topics/' + topicId + '/subtopics';
+  function populateSubtopics() {
+    var ajaxUrl;
+    var selectedId = $('#filter-topic option:selected').val();
+    if (selectedId == 'all') {
+      ajaxUrl = '/api/subtopics';
+    } else {
+      ajaxUrl = '/api/topics/' + selectedId;   
+    }
+    console.log('selectedId', selectedId);
 
+    console.log('starting populate TOPics()');
     $.ajax({
       url: ajaxUrl,
       type: 'GET',
       contentType: 'application/json',
     }).done(function (data) {
+      console.log('ajax done');
       if (data.status === 'success') {
-        var template = $('#select-option-template').html();
-
-        // TODO: handlebars
+        console.log('response success');
+        console.log('result:', data.result);
+        var filter = $('#filter-subtopic');
+        filter.html('<option value="all" selected="">All Topics</option>');
+        if (selectedId == 'all') {
+          $.each(data.result, function() {
+            filter.append($('<option />').val(this._id).text(this.name + ' - ' + this.topic.name));
+          });
+        } else {
+          $.each(data.result.subTopics, function() {
+            filter.append($('<option />').val(this._id).text(this.name + ' - ' + this.topic.name));
+          });
+        }
       }
     });
   }
+
+  
 
   function selectTopic() {
     $('.js-filter-topics').on('change', function () {
@@ -181,6 +205,12 @@
   }
 
   $(function () {
+    
+    populateSubtopics();
+    
+    $('#filter-topic').on('change', function(e) {
+      populateSubtopics();
+    });
 
     // Checks if there's a token and is valid
     var currentToken = localStorage.token;

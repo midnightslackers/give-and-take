@@ -34,11 +34,11 @@ html(lang="en")
             div.form-group
               label(for="filter-topic") Topic
               select.form-control.input-sm.js-filter-topics#filter-topic(name="topic")
-                option(value disabled) Choose topic
-            div.form-group.hide
+                option(value="all" selected) All Topics
+            div.form-group
               label(for="filter-subtopic") Subtopic
               select.form-control.input-sm.js-filter-subtopics#filter-subtopic(name="subtopic")
-                option(value disabled) Choose subtopic
+                option(value disabled selected) Choose subtopic
             div.form-group
               label(for="filter-gender-male") Gender
               div
