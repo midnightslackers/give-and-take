@@ -2,8 +2,6 @@ $(function () {
   
 //  populate select options for topics
   var options = $('#register-topic');
-  
-
   $.ajax({
     url: '/api/topics',
     type: 'GET',
@@ -13,7 +11,6 @@ $(function () {
     var result;     
     if (data.status === 'success') {
       result = data.result;
-      // options.html('<option value="default" selected>Choose a Major Topic</option');
       $.each(result, function() {
         options.append($('<option />').val(this._id).text(this.name));
       });  
@@ -25,10 +22,7 @@ $(function () {
   .fail(function(data) {
     console.dir('fail', data);
   });
-
-
-  
-  
+   
 // Event Listener for Register AND Login Forms
   $('.login-form').on('submit', function(e){
     e.preventDefault();
@@ -65,8 +59,8 @@ $(function () {
         console.log('front end: success');
         localStorage.token = data.result.token;
         localStorage.firstname = data.result.firstname;
-        localStorage.lastname = data.result.lastname;
-        window.location.assign('/dashboard?token=' + data.result.token);
+        localStorage.userId = data.result.userId;
+        window.location.assign('/dashboard');
       } else {
         $('.nav-tabs').before('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+data.result+'</div>');
         console.log(data.result); 
