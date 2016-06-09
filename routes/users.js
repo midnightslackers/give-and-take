@@ -34,7 +34,7 @@ router
         });
       });
   })
-  // filter users by subtopic
+// filter users by subtopic
   .get('/bysubtopic/:subtopicId', (req, res) => {
     User
       .find({
@@ -63,26 +63,26 @@ router
     
   })
   
-  // filter users by TOPIC 
+// filter users by TOPIC 
   
   .get('/bytopic/:topicId', (req, res) => {
     
-    const subPromise = Topic.findById(req.params.topicId)
+    Topic.findById(req.params.topicId)
       .then(foundTopic => {
         if (foundTopic) return foundTopic;
         else throw `TopicId: ${req.params.topicId} does not exist`;
       })
       .then(foundTopic => {
-        SubTopic
+        return SubTopic
           .findOne({
             topic: foundTopic._id
-          })
-          .then(sub => {
-            if (sub) return sub._id;
-            else {
-              throw `${foundTopic.name} has no subtopics`;
-            }
           });
+      })
+      .then(sub => {
+        if (sub) return sub._id;
+        else {
+          throw `${foundTopic.name} has no subtopics`;
+        }
       })
       .then(subId => {
         User
