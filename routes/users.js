@@ -16,8 +16,7 @@ router
       .populate({
         path: 'skills',
         populate: {
-          path: 'topic',
-          select: 'name'
+          path: 'topic'
         }
       })
       .then(users => {
@@ -126,8 +125,7 @@ router
       .populate({
         path: 'skills',
         populate: {
-          path: 'topic',
-          select: 'name'
+          path: 'topic'
         }
       })
       .then(user => {

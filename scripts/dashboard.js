@@ -52,15 +52,15 @@
     });
   }
 
-  
-
-  function selectTopic() {
-    $('.js-filter-topics').on('change', function () {
+  function selectTopicListener() { 
+    $('#filter-topic').on('change', function () { 
+      populateSubtopics();
     });
   }
 
-  function selectSubtopic() {
-    $('.js-filter-subtopics').on('change', function () {
+  function selectSubtopicListener() {
+    $('#filter-subtopic').on('change', function () {  
+      
     });
   }
 
@@ -199,12 +199,6 @@
   }
 
   $(function () {
-    populateTopics();
-    populateSubtopics();
-    
-    $('#filter-topic').on('change', function(e) {
-      populateSubtopics();
-    });
 
     // Checks if there's a token and is valid
     var currentToken = localStorage.token;
@@ -230,11 +224,19 @@
           $('#modal-profile').on('hidden.bs.modal', function () {
             $(this).find('.modal-content').html('');
           });
-
+          
+   // = = = = = = = =   F U N C T I O N   C A L L S   = = = = = = = = = = = = = =
+          
+          selectTopicListener();
+          selectSubtopicListener();
+          populateTopics();
+          populateSubtopics();
           populateUser(localStorage.userId, localStorage.firstname);
           selectPanel();
           getPanels();
           logout();
+          
+   // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
         } else {
           // invalid token
           location.assign('/');
