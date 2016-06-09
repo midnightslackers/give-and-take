@@ -25,6 +25,9 @@ const userSchema = new Schema({
     type: String,
     enum: ['male', 'female']
   },
+  profileImage: {
+    type: String
+  },
   ratio : {
     type: Number,
     default: 1.00
