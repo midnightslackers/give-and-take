@@ -21,7 +21,7 @@ html(lang="en")
           div.collapse.navbar-collapse#navbar-collapse
             ul.nav.navbar-nav.navbar-right
               li
-                a(href="#") Johnny
+                a(href="#modal-profile" data-toggle="modal" data-target="#modal-profile" data-user-id="") Johnny
               li
                 a(href="/about") About
               li
@@ -58,6 +58,7 @@ html(lang="en")
     //-     div.row
     //-       div.col-xs-12
     //-         p Copyright &copy; 2016 <a href="https://github.com/midnightslackers">Midnight Slackers</a>. All rights reserved.
+    block templates
     script(src="//code.jquery.com/jquery-1.12.4.min.js")
     script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
     script(src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js")

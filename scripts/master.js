@@ -1,5 +1,38 @@
 $(function () {
-  
+
+  /*
+  // Checks if there's a token and is valid
+  var currentToken = localStorage.token;
+
+  if (currentToken) {
+    var dataObj = {
+      token: currentToken
+    };
+
+    $.ajax({
+      url: '/api/auth/validate',
+      type: 'POST',
+      contentType: 'application/json',
+      dataType: 'json',
+      data: JSON.stringify(dataObj)
+    }).done(function (data) {
+      if (data.status === 'success' && result === true) {
+        // valid token
+        location.assign('/dashboard');
+      } else {
+        // invalid token
+        $('body')
+          .removeClass('hide')
+          .show();
+      }
+    });
+  } else {
+    $('body')
+      .removeClass('hide')
+      .show();
+  }
+  */
+
 //  populate select options for topics
   var options = $('#register-topic');
   $.ajax({
@@ -8,12 +41,12 @@ $(function () {
     contentType: 'application/json',
   })
   .done(function(data) {
-    var result;     
+    var result;
     if (data.status === 'success') {
       result = data.result;
       $.each(result, function() {
         options.append($('<option />').val(this._id).text(this.name));
-      });  
+      });
     }
     else {
       console.log('status is error');
@@ -22,7 +55,7 @@ $(function () {
   .fail(function(data) {
     console.dir('fail', data);
   });
-   
+
 // Event Listener for Register AND Login Forms
   $('.login-form').on('submit', function(e){
     e.preventDefault();
@@ -39,7 +72,7 @@ $(function () {
         topic : e.target.elements.topic.value,
         skills: e.target.elements.subtopics.value
       };
-    } 
+    }
     else if ($(this).attr('action') === '/api/auth/login') {
       dataObj = {
         username: e.target.elements.username.value,
@@ -63,13 +96,14 @@ $(function () {
         window.location.assign('/dashboard');
       } else {
         $('.nav-tabs').before('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+data.result+'</div>');
-        console.log(data.result); 
+        console.log(data.result);
       }
-  
+
     }).fail(function(data){
       var err = JSON.parse(data.responseText);
       $('.nav-tabs').before('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+err.result+'</div>');
       console.error(err);
     });
   });
+
 });

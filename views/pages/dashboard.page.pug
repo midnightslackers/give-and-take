@@ -7,7 +7,7 @@ block content
         h1 Dashboard
     div.row
       div.col-xs-12.col-md-4
-        div.panel.panel-default.panel--left-image(data-toggle="modal" data-target="#modal-profile")
+        div.panel.panel-default.panel--left-image(data-toggle="modal" data-target="#modal-profile" data-user-id="")
           div.panel-body
             img.panel__image(src="/images/placeholderPics/avatar2.png" height="150")
             h2.h4 {subtopic} in {topic}
@@ -91,3 +91,9 @@ block content
                   textarea.form-control.input-sm(name="message" rows="4")
                 div.form-group
                   input.btn.btn--secondary(type="submit" value="Send")
+
+block templates
+  script#topics-template(type="text/x-handlebars-template")
+  script#subtopics-template(type="text/x-handlebars-template")
+  script#panel-template(type="text/x-handlebars-template")
+  script#profile-template(type="text/x-handlebars-template")
