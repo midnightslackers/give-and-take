@@ -9,6 +9,7 @@ router
     SubTopic
       .find({})
       // .select('name')
+      .populate('topic')
       .lean()
       .then(subs => {
         let resObj = {

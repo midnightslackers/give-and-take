@@ -13,7 +13,13 @@ router
   .get('/', (req, res) => {
     User
       .find()
-      .populate('skills')
+      .populate({
+        path: 'skills',
+        populate: {
+          path: 'topic',
+          select: 'name'
+        }
+      })
       .then(users => {
         let resObj = {
           status: 'error',
