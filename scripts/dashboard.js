@@ -52,12 +52,51 @@
       type: 'GET',
       contentType: 'application/json',
     }).done(function (data) {
-      if (data.status === 'success') {
-        var template = $('#panel-template').html();
+      if (data.status === 'success' && data.result) {
+        var $panels = $('.panels');
 
-        // TODO: handlebars
+        $panels.html('');
+
+        data.result.forEach(function (currentPanel, index, panels) {
+          var panelsCount = panels.length;
+          var count = index + 1;
+          var $div;
+
+          // TODO: create row after every third panels
+          if (count === 1) {
+            $div = $('<div>').addClass('row').appendTo($panels);
+          }
+
+          currentPanel.panelClass = 'panel panel-default js-modal-profile';
+
+          if (currentPanel.profileImage) {
+            currentPanel.panelClass += ' panel--left-image';
+          }
+
+          currentPanel.topic = '';
+          currentPanel.subtopic = '';
+
+          if (currentPanel.skills) {
+            currentPanel.topic = currentPanel.skills[0].topic;
+
+            var subtopics = currentPanel.subtopic = currentPanel.skills[0].subtopics;
+
+            if (subtopics) {
+              currentPanel.subtopic = subtopics.subtopic;
+            }
+          }
+
+          var source = $('#panel-template').html();
+          var template = Handlebars.compile(source);
+          var html = template(currentPanel);
+
+          $div.append(html);
+        });
       }
     });
+  }
+
+  function createProfile() {
   }
 
   function getProfile() {
@@ -120,6 +159,7 @@
             .show();
 
           populateUser(localStorage.userId, localStorage.firstname);
+          getPanels();
           logout();
         } else {
           // invalid token
