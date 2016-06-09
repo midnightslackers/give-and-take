@@ -1,28 +1,91 @@
-$(function () {
+(function(module, $) {
 
-  function populateTopics() {
+  function populateUser(userId, firstName) {
+    $('.js-user-profile-link')
+      .attr('data-user-id', userId)
+      .text(firstName);
   }
 
-  function populateSubtopics() {
+  function populateTopics() {
+    $.ajax({
+      url: '/api/topics',
+      type: 'GET',
+      contentType: 'application/json',
+    }).done(function (data) {
+      if (data.status === 'success') {
+        var template = $('#select-option-template').html();
+
+        // TODO: handlebars
+      }
+    });
+  }
+
+  function populateSubtopics(topicId) {
+    var ajaxUrl = '/api/topics/' + topicId + '/subtopics';
+
+    $.ajax({
+      url: ajaxUrl,
+      type: 'GET',
+      contentType: 'application/json',
+    }).done(function (data) {
+      if (data.status === 'success') {
+        var template = $('#select-option-template').html();
+
+        // TODO: handlebars
+      }
+    });
   }
 
   function selectTopic() {
+    $('.js-filter-topics').on('change', function () {
+    });
   }
 
   function selectSubtopic() {
+    $('.js-filter-subtopics').on('change', function () {
+    });
   }
 
   function getPanels() {
+    $.ajax({
+      url: '/api/users',
+      type: 'GET',
+      contentType: 'application/json',
+    }).done(function (data) {
+      if (data.status === 'success') {
+        var template = $('#panel-template').html();
+
+        // TODO: handlebars
+      }
+    });
   }
 
   function getProfile() {
+    $('#profile-modal').on('shown.bs.modal', function () {
+      $('#myInput').focus()
+    })
+
+    $.ajax({
+      url: '/api/users',
+      type: 'GET',
+      contentType: 'application/json',
+    }).done(function (data) {
+      if (data.status === 'success') {
+        var template = $('#profile-template').html();
+
+        // TODO: handlebars
+      }
+    });
   }
 
   function sendMessage() {
+    $('.js-send-message').on('submit', function (e) {
+      e.preventDefault();
+    });
   }
 
   function logout() {
-    $('a[href="#logout"]').on('click', function (e) {
+    $('.js-logout').on('click', function (e) {
       e.preventDefault();
 
       localStorage.removeItem('token');
@@ -33,36 +96,40 @@ $(function () {
     });
   }
 
-  /*
-  // Checks if there's a token and is valid
-  var currentToken = localStorage.token;
+  $(function () {
 
-  if (currentToken) {
-    var dataObj = {
-      token: currentToken
-    };
+    /*
+    // Checks if there's a token and is valid
+    var currentToken = localStorage.token;
 
-    $.ajax({
-      url: '/api/auth/validate',
-      type: 'POST',
-      contentType: 'application/json',
-      dataType: 'json',
-      data: JSON.stringify(dataObj)
-    }).done(function (data) {
-      if (data.status === 'success' && result === true) {
-        // valid token
-        $('body')
-          .removeClass('hide')
-          .show();
-      } else {
-        // invalid token
-        module.location.assign('/');
-      }
-    });
-  } else {
-    // no token found
-    module.location.assign('/');
-  }
-  */
+    if (currentToken) {
+      var dataObj = {
+        token: currentToken
+      };
 
-});
+      $.ajax({
+        url: '/api/auth/validate',
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(dataObj)
+      }).done(function (data) {
+        if (data.status === 'success' && result === true) {
+          // valid token
+          $('body')
+            .removeClass('hide')
+            .show();
+        } else {
+          // invalid token
+          module.location.assign('/');
+        }
+      });
+    } else {
+      // no token found
+      module.location.assign('/');
+    }
+    */
+
+  });
+
+}(window, jQuery));

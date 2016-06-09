@@ -21,11 +21,11 @@ html(lang="en")
           div.collapse.navbar-collapse#navbar-collapse
             ul.nav.navbar-nav.navbar-right
               li
-                a(href="#modal-profile" data-toggle="modal" data-target="#modal-profile" data-user-id="") Johnny
+                a.js-user-profile-link(href="#modal-profile" data-toggle="modal" data-target="#modal-profile")
               li
                 a(href="/about") About
               li
-                a(href="#logout") Log Out
+                a.js-logout(href="#logout") Log Out
     aside.aside.collapse#search-collapse
       div.container-fluid
         div.row
@@ -33,11 +33,11 @@ html(lang="en")
             h2.h3 Filter
             div.form-group
               label(for="filter-topics") Topics
-              select.form-control.input-sm#filter-topics(name="topics")
+              select.form-control.input-sm.js-filter-topics#filter-topics(name="topics")
                 option(value) Choose topic
             div.form-group
               label(for="filter-subtopics") Subtopics
-              select.form-control.input-sm#filter-subtopics(name="subtopics")
+              select.form-control.input-sm.js-filter-subtopics.js-logout#filter-subtopics(name="subtopics")
                 option(value) Choose subtopic
             div.form-group
               label(for="filter-gender-male") Gender
