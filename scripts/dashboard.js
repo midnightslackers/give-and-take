@@ -120,7 +120,6 @@
 
   $(function () {
 
-    /*
     // Checks if there's a token and is valid
     var currentToken = localStorage.token;
 
@@ -131,26 +130,28 @@
 
       $.ajax({
         url: '/api/auth/validate',
-        type: 'POST',
+        type: 'GET',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify(dataObj)
+        data: dataObj
       }).done(function (data) {
-        if (data.status === 'success' && result === true) {
+        if (data.status === 'success' && data.result === true) {
           // valid token
           $('body')
             .removeClass('hide')
             .show();
+
+          populateUser(localStorage.userId, localStorage.firstname);
+          logout();
         } else {
           // invalid token
-          module.location.assign('/');
+          location.assign('/');
         }
       });
     } else {
       // no token found
-      module.location.assign('/');
+      location.assign('/');
     }
-    */
 
   });
 

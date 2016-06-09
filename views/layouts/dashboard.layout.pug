@@ -6,7 +6,7 @@ html(lang="en")
     link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
     link(rel="stylesheet" href="/styles/master.css")
     link(rel="stylesheet" href="/styles/dashboard.css")
-  body.page--dashboard
+  body.page--dashboard.hide
     header.header
       nav.navbar.navbar-default.navbar-fixed-top
         div.container-fluid
@@ -32,13 +32,13 @@ html(lang="en")
           div.col-xs-12
             h2.h3 Filter
             div.form-group
-              label(for="filter-topics") Topics
-              select.form-control.input-sm.js-filter-topics#filter-topics(name="topics")
-                option(value) Choose topic
-            div.form-group
-              label(for="filter-subtopics") Subtopics
-              select.form-control.input-sm.js-filter-subtopics.js-logout#filter-subtopics(name="subtopics")
-                option(value) Choose subtopic
+              label(for="filter-topic") Topic
+              select.form-control.input-sm.js-filter-topics#filter-topic(name="topic")
+                option(value disabled) Choose topic
+            div.form-group.hide
+              label(for="filter-subtopic") Subtopic
+              select.form-control.input-sm.js-filter-subtopics#filter-subtopic(name="subtopic")
+                option(value disabled) Choose subtopic
             div.form-group
               label(for="filter-gender-male") Gender
               div

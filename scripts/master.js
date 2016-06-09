@@ -1,23 +1,23 @@
 (function(module, $) {
 
   $(function () {
-    /*
     // Checks if there's a token and is valid
+    var isHomePage = $('body').hasClass('page--home');
     var currentToken = localStorage.token;
 
-    if (currentToken) {
+    if (isHomePage && currentToken) {
       var dataObj = {
         token: currentToken
       };
 
       $.ajax({
         url: '/api/auth/validate',
-        type: 'POST',
+        type: 'GET',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify(dataObj)
+        data: dataObj
       }).done(function (data) {
-        if (data.status === 'success' && result === true) {
+        if (data.status === 'success' && data.result === true) {
           // valid token
           location.assign('/dashboard');
         } else {
@@ -32,7 +32,6 @@
         .removeClass('hide')
         .show();
     }
-    */
 
   //  populate select options for topics
     var options = $('#register-topic');
