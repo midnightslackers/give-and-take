@@ -10,7 +10,7 @@ router
   .get('/', (req, res) => {
     Topic
       .find({})
-      .select('name')
+      // .select('name')
       .lean()
       .then(topics => {
         let resObj = {
@@ -126,7 +126,7 @@ router
   });
   
 
-// Temp POST major topics ADMIN ONLY***
+//  POST major topics ADMIN ONLY***
 router
     .use(jsonParser)
     .post('/', (req, res) => {
