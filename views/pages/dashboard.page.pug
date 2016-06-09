@@ -5,7 +5,7 @@ block content
     div.row
       div.col-xs-12
         h1 Dashboard
-    div.panels
+    div.panels.js-panels
     div.modal#modal-profile(tabindex="-1" role="dialog" aria-labelledby="modal-profile")
       div.modal-dialog.modal-lg(role="document")
         div.modal-content
@@ -27,7 +27,7 @@ block templates
     div.modal-header
       button.close(type="button" data-dismiss="modal" aria-label="Close")
         span(aria-hidden="true") &times;
-      h2.modal-title.h3#modal-profile {{firstname}} {{lastname}}
+      h2.modal-title#modal-profile {{firstname}}
     div.modal-body
       div.profile__info
         img.profile__image(src="{{profileImage}}")
@@ -35,14 +35,16 @@ block templates
           div.col-xs-12
             h3 {{topic}}
             h4 {{subtopic}}
+            p {{sessionsGiven}} Given / {{sessionsTaken}} Taken
             p Gender: {{gender}}
             p Zip: {{zip}}
+      | {{#if notProfile}}
       div.profile__send-message
-        h3 Send {{firstname}} {{lastname}} a message
-        form.js-send-message(action="/api/users/{{userId}}/message" method="post")
+        h3 Send {{firstname}} a message
+        form.js-send-message(action="/api/users/{{_id}}/message" method="post")
           div.form-group
             label(for="name") Name
-            input.form-control.input-sm(type="text" name="name" value="{{firstname}} {{lastname}}" autocomplete="off" required)
+            input.form-control.input-sm(type="text" name="name" autocomplete="off" required)
           div.form-group
             label(for="email") Email
             input.form-control.input-sm(type="email" name="email" autocomplete="off" required)
@@ -51,3 +53,4 @@ block templates
             textarea.form-control.input-sm(name="message" rows="4" autocomplete="off" required)
           div.form-group
             input.btn.btn--secondary(type="submit" value="Send")
+      | {{/if}}
