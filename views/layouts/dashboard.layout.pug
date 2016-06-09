@@ -32,12 +32,12 @@ html(lang="en")
           div.col-xs-12
             h2.h3 Filter
             div.form-group
-              label(for="filter-topics") Topics
-              select.form-control.input-sm.js-filter-topics#filter-topics(name="topics")
+              label(for="filter-topic") Topic
+              select.form-control.input-sm.js-filter-topics#filter-topic(name="topic")
                 option(value disabled) Choose topic
-            div.form-group
-              label(for="filter-subtopics") Subtopics
-              select.form-control.input-sm.js-filter-subtopics.js-logout#filter-subtopics(name="subtopics")
+            div.form-group.hide
+              label(for="filter-subtopic") Subtopic
+              select.form-control.input-sm.js-filter-subtopics#filter-subtopic(name="subtopic")
                 option(value disabled) Choose subtopic
             div.form-group
               label(for="filter-gender-male") Gender
