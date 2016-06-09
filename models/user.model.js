@@ -23,14 +23,18 @@ const userSchema = new Schema({
   },
   gender : {
     type: String,
-    enum: ['male', 'female']
+    enum: ['male', 'female', 'other']
   },
   profileImage: {
     type: String
   },
-  ratio : {
+  sessionsGiven : {
     type: Number,
-    default: 1.00
+    default: 0
+  },
+  sessionsTaken : {
+    type: Number,
+    default: 0
   },
   skills: [{
     type: Schema.Types.ObjectId,
