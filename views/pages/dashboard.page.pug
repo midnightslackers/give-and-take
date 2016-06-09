@@ -29,12 +29,14 @@ block templates
         span(aria-hidden="true") &times;
       h2.modal-title#modal-profile {{firstname}}
     div.modal-body
-      div.profile__info
+      div(class="{{profileInfoClass}}")
+        | {{#if profileImage}}
         img.profile__image(src="{{profileImage}}")
+        | {{/if}}
         div.row
           div.col-xs-12
-            h3 {{topic}}
-            h4 {{subtopic}}
+            h3 {{subtopic}}
+            h4 {{topic}}
             p {{sessionsGiven}} Given / {{sessionsTaken}} Taken
             p Gender: {{gender}}
             p Zip: {{zip}}

@@ -15,7 +15,7 @@
       if (data.status === 'success') {
         var topicObjList = data.result;
         var filter = $('#filter-topic');
-        
+
         $.each(topicObjList, function() {
           filter.append($('<option />').val(this._id).text(this.name));
         });
@@ -29,7 +29,7 @@
     if (selectedId == 'all') {
       ajaxUrl = '/api/subtopics';
     } else {
-      ajaxUrl = '/api/topics/' + selectedId;   
+      ajaxUrl = '/api/topics/' + selectedId;
     }
     console.log('selectedId', selectedId);
 
@@ -58,7 +58,7 @@
     });
   }
 
-  
+
 
   function selectTopic() {
     $('.js-filter-topics').on('change', function () {
@@ -88,23 +88,17 @@
             $('<div>').addClass('row').appendTo($panels);
           }
 
+          currentPanel.topic = '';
+          currentPanel.subtopic = '';
           currentPanel.panelClass = 'panel panel-default js-modal-profile';
 
           if (currentPanel.profileImage) {
             currentPanel.panelClass += ' panel--left-image';
           }
 
-          currentPanel.topic = '';
-          currentPanel.subtopic = '';
-
           if (currentPanel.skills) {
             currentPanel.subtopic = currentPanel.skills[0].name;
-
-            // var subtopics = currentPanel.subtopic = currentPanel.skills[0].subtopics;
-            //
-            // if (subtopics) {
-            //   currentPanel.subtopic = subtopics.subtopic;
-            // }
+            currentPanel.topic = currentPanel.skills[0].topic.name;
           }
 
           var source = $('#panel-template').html();
@@ -129,7 +123,20 @@
         contentType: 'application/json'
       }).done(function (data) {
         if (data.status === 'success' && data.result) {
+          data.result.topic = '';
+          data.result.subtopic = '';
           data.result.notProfile = true;
+          data.result.profileInfoClass = 'profile__info';
+
+          if (data.result.profileImage) {
+            data.result.profileInfoClass += ' profile__info--image';
+          }
+
+          if (data.result.skills) {
+            data.result.subtopic = data.result.skills[0].name;
+            data.result.topic = data.result.skills[0].topic.name;
+          }
+
           if (userId === localStorage.userId) {
             data.result.notProfile = false;
           }
@@ -205,9 +212,9 @@
   }
 
   $(function () {
-    
+
     populateSubtopics();
-    
+
     $('#filter-topic').on('change', function(e) {
       populateSubtopics();
     });
