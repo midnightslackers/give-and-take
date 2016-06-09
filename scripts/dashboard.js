@@ -1,7 +1,7 @@
 (function(module, $) {
 
   function populateUser(userId, firstName) {
-    $('.js-user-profile-link')
+    $('.js-modal-profile-self')
       .attr('data-user-id', userId)
       .text(firstName);
   }
@@ -68,14 +68,16 @@
     $.ajax({
       url: '/api/users',
       type: 'GET',
-      contentType: 'application/json',
+      contentType: 'application/json'
     }).done(function (data) {
       if (data.status === 'success' && data.result) {
         var $panels = $('.panels');
 
         $panels.html('');
 
-        data.result.forEach(function (currentPanel, index) {
+        data.result.filter(function (currentPanel) {
+          return currentPanel._id !== localStorage.userId;
+        }).forEach(function (currentPanel, index) {
           if (index % 3 === 0) {
             $('<div>').addClass('row').appendTo($panels);
           }
@@ -109,7 +111,33 @@
     });
   }
 
-  function createProfile() {
+  function selectPanel() {
+    $('.navbar-nav, .js-panels').on('click', '.js-modal-profile', function (e) {
+      e.preventDefault();
+
+      var userId = $(this).attr('data-user-id');
+
+      $.ajax({
+        url: '/api/users/' + userId,
+        type: 'GET',
+        contentType: 'application/json'
+      }).done(function (data) {
+        if (data.status === 'success' && data.result) {
+          data.result.notProfile = true;
+          if (userId === localStorage.userId) {
+            data.result.notProfile = false;
+          }
+
+          var source = $('#profile-template').html();
+          var template = Handlebars.compile(source);
+          var html = template(data.result);
+          var $modal = $('#modal-profile');
+
+          $modal.find('.modal-content').html(html);
+          $modal.modal('show');
+        }
+      });
+    });
   }
 
   function getProfile() {
@@ -120,7 +148,7 @@
     $.ajax({
       url: '/api/users/' + selectedUserId,
       type: 'GET',
-      contentType: 'application/json',
+      contentType: 'application/json'
     }).done(function(data) {
       if (data.status === 'success') {
         var template = $('#profile-template').html();
@@ -199,7 +227,12 @@
             .removeClass('hide')
             .show();
 
+          $('#modal-profile').on('hidden.bs.modal', function () {
+            $(this).find('.modal-content').html('');
+          });
+
           populateUser(localStorage.userId, localStorage.firstname);
+          selectPanel();
           getPanels();
           logout();
         } else {
