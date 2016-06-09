@@ -13,6 +13,7 @@ router
   .get('/', (req, res) => {
     User
       .find()
+      .populate('skills')
       .then(users => {
         let resObj = {
           status: 'error',
