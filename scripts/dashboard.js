@@ -23,26 +23,42 @@
     });
   })();
 
-  (function populateSubtopics(topicId) {
+  function populateSubtopics() {
+    var ajaxUrl;
+    var selectedId = $('#filter-topic option:selected').val();
+    if (selectedId == 'all') {
+      ajaxUrl = '/api/subtopics';
+    } else {
+      ajaxUrl = '/api/topics/' + selectedId;   
+    }
+    console.log('selectedId', selectedId);
+
     console.log('starting populate TOPics()');
     $.ajax({
-      url: '/api/subtopics',
+      url: ajaxUrl,
       type: 'GET',
       contentType: 'application/json',
     }).done(function (data) {
       console.log('ajax done');
       if (data.status === 'success') {
         console.log('response success');
-        var topicObjList = data.result;
-        console.log(data.result);
+        console.log('result:', data.result);
         var filter = $('#filter-subtopic');
-        
-        $.each(topicObjList, function() {
-          filter.append($('<option />').val(this._id).text(this.name + ' - ' + this.topic.name));
-        });
+        filter.html('<option value="all" selected="">All Topics</option>');
+        if (selectedId == 'all') {
+          $.each(data.result, function() {
+            filter.append($('<option />').val(this._id).text(this.name + ' - ' + this.topic.name));
+          });
+        } else {
+          $.each(data.result.subTopics, function() {
+            filter.append($('<option />').val(this._id).text(this.name + ' - ' + this.topic.name));
+          });
+        }
       }
     });
-  })();
+  }
+
+  
 
   function selectTopic() {
     $('.js-filter-topics').on('change', function () {
@@ -161,6 +177,12 @@
   }
 
   $(function () {
+    
+    populateSubtopics();
+    
+    $('#filter-topic').on('change', function(e) {
+      populateSubtopics();
+    });
 
     // Checks if there's a token and is valid
     var currentToken = localStorage.token;

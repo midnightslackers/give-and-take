@@ -30,7 +30,13 @@ router
   .get('/:topicId', (req, res) => {
     Topic
       .findById(req.params.topicId)
-      .populate('subTopics')
+      .populate({
+        path: 'subTopics',
+        populate: {
+          path: 'topic',
+          select: 'name'
+        }
+      })
       .lean()
       .then(topic => {
         let resObj = {
