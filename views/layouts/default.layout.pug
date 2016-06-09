@@ -1,31 +1,30 @@
 doctype html
 html(lang="en")
   head
-    title Give&amp;Take
+    block title
+      title Give&amp;Take
     link(rel="stylesheet" href="//fonts.googleapis.com/css?family=Alice|Playfair+Display:700")
     link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
     link(rel="stylesheet" href="/styles/master.css")
   body.page--home
     div.container-fluid
-      header
+      header.header
         nav.navbar.navbar-default.navbar-fixed-top
           div.container-fluid
             div.navbar-header
               button.navbar-toggle.collapsed(data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false")
-                span.sr-only toggle navigation
-                span.icon-bar
-                span.icon-bar
-                span.icon-bar
+                span.sr-only Toggle Navigation
+                span.glyphicon.glyphicon-menu-hamburger(aria-hidden="true")
               a.navbar-brand(href="/")
                 img(src="/images/GTL3.png" height="46")
             div.collapse.navbar-collapse#navbar-collapse
               ul.nav.navbar-nav.navbar-right
                 li
                   a(href="/about") About
-      main
+      main.main
         block content
-      footer.text-center
-        p Copyright &copy; 2016 Midnight Slackers. All rights reserved.
+      footer.footer.text-center
+        p Copyright &copy; 2016 <a href="https://github.com/midnightslackers">Midnight Slackers</a>. All rights reserved.
     script(src="//code.jquery.com/jquery-1.12.4.min.js")
     script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
     script(src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js")

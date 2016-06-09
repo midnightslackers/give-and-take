@@ -5,53 +5,48 @@ block content
     div.col-xs-12.col-sm-6.col-sm-offset-3
       ul.nav.nav-tabs.nav-justified(role="tablist")
         li.active(role="presentation")
-          a(href="#register" role="tab" data-toggle="tab" aria-controls="register") Create an account
+          a.h3(href="#register" role="tab" data-toggle="tab" aria-controls="register") Register
         li(role="presentation")
-          a(href="#login" role="tab" data-toggle="tab" aria-controls="login") Log In
+          a.h3(href="#login" role="tab" data-toggle="tab" aria-controls="login") Log In
       div.tab-content
         div#register.tab-pane.active(role="tabpanel")
           form.login-form(action="/api/auth/register" method="post")
-            div.form-group
-              label(for="register-first-name") First Name
-              input.form-control#register-first-name(type="input" name="first_name" autocomplete="off")
-            div.form-group
-              label(for="register-last-name") Last Name
-              input.form-control#register-last-name(type="input" name="last_name" autocomplete="off")
+            div.row
+              div.col-xs-6
+                div.form-group
+                  label(for="register-first-name") First Name
+                  input.form-control.input-sm#register-first-name(type="input" name="first_name" autocomplete="off")
+              div.col-xs-6
+                div.form-group
+                  label(for="register-last-name") Last Name
+                  input.form-control.input-sm#register-last-name(type="input" name="last_name" autocomplete="off")
             div.form-group
               label(for="register-username") Username
-              input.form-control#register-username(type="input" name="username" autocomplete="off")
+              input.form-control.input-sm#register-username(type="input" name="username" autocomplete="off")
             div.form-group
               label(for="password") Password
-              input.form-control#register-password(type="password" name="password" autocomplete="off")
+              input.form-control.input-sm#register-password(type="password" name="password" autocomplete="off")
             div.form-group
               label(for="register-gender-male") Gender
-              div.radio
-                label(for="register-gender-male")
-                  input#register-gender-male(type="radio" name="gender" value="male")
-                  span Male
-              div.radio
-                label(for="register-gender-female")
-                  input#register-gender-female(type="radio" name="gender" value="female")
-                  span Female
-              div.radio
-                label(for="register-gender-other")
-                  input#register-gender-other(type="radio" name="gender" value="other")
-                  span Other
+              div
+                label.radio-inline(for="register-gender-male")
+                  input#register-gender-male(type="radio" name="gender" value="male")/ Male
+                label.radio-inline(for="register-gender-female")
+                  input#register-gender-female(type="radio" name="gender" value="female")/ Female
+                label.radio-inline(for="register-gender-other")
+                  input#register-gender-other(type="radio" name="gender" value="other")/ Other
             div.form-group
               label(for="register-zip") Zip
-              input.form-control#register-zip(type="input" name="zip" autocomplete="off")
+              input.form-control.input-sm#register-zip(type="input" name="zip" autocomplete="off")
             div.form-group
               label(for="register-topic") Topic
-              select.form-control#register-topic(name="topic")
+              select.form-control.input-sm#register-topic(name="topic")
                 option(value="default" selected) Choose a Major Topic
             div.form-group
-              label(for="register-subtopics") Subtopics
-              div.input-group
-                input.form-control#register-subtopics(type="input" name="subtopics" autocomplete="off")
-                span.input-group-btn
-                  button.btn.btn-default(type="button") Add
+              label(for="register-subtopics") Subtopic
+              input.form-control.input-sm#register-subtopics(type="input" name="subtopics" autocomplete="off")
             div.form-group
-              input.btn.btn-primary(type="submit" value="Register")
+              input.btn.btn--secondary(type="submit" value="Register")
         div#login.tab-pane(role="tabpanel")
           form.login-form(action="/api/auth/login" method="post")
             div.form-group
@@ -61,4 +56,4 @@ block content
               label(for="login-password") Password
               input.form-control#login-password(type="password" name="password" autocomplete="off")
             div.form-group
-              input.btn.btn-primary(type="submit" value="Log In")
+              input.btn.btn--secondary(type="submit" value="Log In")

@@ -7,7 +7,7 @@ html(lang="en")
     link(rel="stylesheet" href="/styles/master.css")
     link(rel="stylesheet" href="/styles/dashboard.css")
   body.page--dashboard
-    header
+    header.header
       nav.navbar.navbar-default.navbar-fixed-top
         div.container-fluid
           div.navbar-header
@@ -41,18 +41,20 @@ html(lang="en")
                 option(value) Choose subtopic
             div.form-group
               label(for="filter-gender-male") Gender
-              div.radio
-                label(for="filter-gender-male")
+              div
+                label.radio-inline(for="filter-gender-male")
                   input#filter-gender-male(type="radio" name="gender" value="Male")
                   span Male
-              div.radio
-                label(for="filter-gender-female")
+                label.radio-inline(for="filter-gender-female")
                   input#filter-gender-female(type="radio" name="gender" value="female")
                   span Female
+                label.radio-inline(for="filter-gender-other")
+                  input#filter-gender-other(type="radio" name="gender" value="other")
+                  span Other
     main.main
       block content
     footer.footer
-      p Copyright &copy; 2016 Midnight Slackers. All rights reserved.
+      p Copyright &copy; 2016 <a href="https://github.com/midnightslackers">Midnight Slackers</a>. All rights reserved.
     script(src="//code.jquery.com/jquery-1.12.4.min.js")
     script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
     script(src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js")

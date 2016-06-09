@@ -4,6 +4,9 @@
     e.preventDefault();
 
     localStorage.removeItem('token');
+    localStorage.removeItem('firstname');
+    localStorage.removeItem('userId');
+
     location.assign('/');
   });
 
