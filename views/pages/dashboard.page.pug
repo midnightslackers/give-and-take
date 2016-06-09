@@ -119,7 +119,7 @@ block templates
             p Zip: {{zip}}
       div.profile__send-message
         h3 Send {{firstname}} {{lastname}} a message
-        form(action="/api/user/{{userId}}/message" method="post")
+        form.js-send-message(action="/api/users/{{userId}}/message" method="post")
           div.form-group
             label(for="name") Name
             input.form-control.input-sm(type="text" name="name" value="{{firstname}} {{lastname}}" autocomplete="off" required)

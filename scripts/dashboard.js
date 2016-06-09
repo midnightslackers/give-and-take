@@ -66,10 +66,10 @@
     })
 
     $.ajax({
-      url: '/api/users',
+      url: '/api/users/' + selectedUserId,
       type: 'GET',
       contentType: 'application/json',
-    }).done(function (data) {
+    }).done(function(data) {
       if (data.status === 'success') {
         var template = $('#profile-template').html();
 
@@ -79,8 +79,30 @@
   }
 
   function sendMessage() {
+    var userId = localStorage.getItem('userId');
+    var senderFirstname;
+    var senderEmail;
+    $.ajax({
+      url: '/api/users/' + userId,
+      type: 'GET',
+      contentType: 'application/json',
+    }).done(function(data) {
+      if (data.status === 'success') {
+        senderFirstname = data.result.firstname;
+        senderEmail = data.result.username;
+        // TO DO : autofill form with name and email
+        // var source = $('#profile-template').html();
+        // var template = Handlebars.compile(source);
+        // var context = {};
+        // var html = template(context);
+      }
+    });
+    
     $('.js-send-message').on('submit', function (e) {
       e.preventDefault();
+      // grabbing field info
+      // ajax POST to api/users/sender/message
+      
     });
   }
 
