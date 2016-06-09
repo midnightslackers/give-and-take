@@ -6,35 +6,43 @@
       .text(firstName);
   }
 
-  function populateTopics() {
+  (function populateTopics() {
     $.ajax({
       url: '/api/topics',
       type: 'GET',
       contentType: 'application/json',
     }).done(function (data) {
       if (data.status === 'success') {
-        var template = $('#select-option-template').html();
-
-        // TODO: handlebars
+        var topicObjList = data.result;
+        var filter = $('#filter-topic');
+        
+        $.each(topicObjList, function() {
+          filter.append($('<option />').val(this._id).text(this.name));
+        });
       }
     });
-  }
+  })();
 
-  function populateSubtopics(topicId) {
-    var ajaxUrl = '/api/topics/' + topicId + '/subtopics';
-
+  (function populateSubtopics(topicId) {
+    console.log('starting populate TOPics()');
     $.ajax({
-      url: ajaxUrl,
+      url: '/api/subtopics',
       type: 'GET',
       contentType: 'application/json',
     }).done(function (data) {
+      console.log('ajax done');
       if (data.status === 'success') {
-        var template = $('#select-option-template').html();
-
-        // TODO: handlebars
+        console.log('response success');
+        var topicObjList = data.result;
+        console.log(data.result);
+        var filter = $('#filter-subtopic');
+        
+        $.each(topicObjList, function() {
+          filter.append($('<option />').val(this._id).text(this.name + ' - ' + this.topic.name));
+        });
       }
     });
-  }
+  })();
 
   function selectTopic() {
     $('.js-filter-topics').on('change', function () {
