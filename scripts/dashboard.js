@@ -6,7 +6,7 @@
       .text(firstName);
   }
 
-  (function populateTopics() {
+  function populateTopics() {
     $.ajax({
       url: '/api/topics',
       type: 'GET',
@@ -21,7 +21,7 @@
         });
       }
     });
-  })();
+  }
 
   function populateSubtopics() {
     var ajaxUrl;
@@ -31,18 +31,12 @@
     } else {
       ajaxUrl = '/api/topics/' + selectedId;
     }
-    console.log('selectedId', selectedId);
-
-    console.log('starting populate TOPics()');
     $.ajax({
       url: ajaxUrl,
       type: 'GET',
       contentType: 'application/json',
     }).done(function (data) {
-      console.log('ajax done');
       if (data.status === 'success') {
-        console.log('response success');
-        console.log('result:', data.result);
         var filter = $('#filter-subtopic');
         filter.html('<option value="all" selected="">All Topics</option>');
         if (selectedId == 'all') {
@@ -212,7 +206,7 @@
   }
 
   $(function () {
-
+    populateTopics();
     populateSubtopics();
 
     $('#filter-topic').on('change', function(e) {
