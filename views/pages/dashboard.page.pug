@@ -1,96 +1,97 @@
 extends ../layouts/dashboard.layout.pug
 
 block content
-  div.container-fluid
-    div.row
-      div.col-xs-12
-        h1 Dashboard
-    div.row
-      div.col-xs-12.col-md-4
-        div.panel.panel-default.panel--left-image(data-toggle="modal" data-target="#modal-profile" data-user-id="")
-          div.panel-body
-            img.panel__image(src="/images/placeholderPics/avatar2.png" height="150")
-            h2.h4 {subtopic} in {topic}
-            p by {username}
-            p {ratio}
-      div.col-xs-12.col-md-4
-        div.panel.panel-default.panel--left-image
-          div.panel-body
-            img.panel__image(src="/images/placeholderPics/avatar5.gif" height="150")
-            span This is Panel Number 2
-      div.col-xs-12.col-md-4
-        div.panel.panel-default
-          div.panel-body
-            span This is Panel Number 3
-    div.row
-      div.col-xs-12.col-md-4
-        div.panel.panel-default
-          div.panel-body
-            span This is Panel Number 1
-      div.col-xs-12.col-md-4
-        div.panel.panel-default
-          div.panel-body
-            span This is Panel Number 2
-      div.col-xs-12.col-md-4
-        div.panel.panel-default
-          div.panel-body
-            span This is Panel Number 3
-    div.row
-      div.col-xs-12.col-md-4
-        div.panel.panel-default
-          div.panel-body
-            span This is Panel Number 1
-      div.col-xs-12.col-md-4
-        div.panel.panel-default
-          div.panel-body
-            span This is Panel Number 2
-      div.col-xs-12.col-md-4
-        div.panel.panel-default
-          div.panel-body
-            span This is Panel Number 3
-    div.row
-      div.col-xs-12.col-md-4
-        div.panel.panel-default
-          div.panel-body
-            span This is Panel Number 1
-      div.col-xs-12.col-md-4
-        div.panel.panel-default
-          div.panel-body
-            span This is Panel Number 2
-      div.col-xs-12.col-md-4
-        div.panel.panel-default
-          div.panel-body
-            span This is Panel Number 3
-    div.modal#modal-profile(tabindex="-1" role="dialog" aria-labelledby="modal-profile")
-      div.modal-dialog.modal-lg(role="document")
-        div.modal-content
-          div.modal-header
-            button.close(type="button" data-dismiss="modal" aria-label="Close")
-              span(aria-hidden="true") &times;
-            h2.modal-title.h3#modal-profile {username}
-          div.modal-body
-            div.profile__info
-              img.profile__image(src="/images/placeholderPics/avatar2.png")
-              div.row
-                div.col-xs-12
-                  h3 {topic}
-                  h4 {subtopic}
-                  p {gender}
-                  p {location}
-            div.profile__send-message
-              h3 Send {username} a message
-              form(action="/api/message" method="post")
-                div.form-group
-                  label(for="name") Name
-                  input.form-control.input-sm(type="text" name="name")
-                div.form-group
-                  label(for="email") Email
-                  input.form-control.input-sm(type="text" name="email")
-                div.form-group
-                  label(for="message") Message
-                  textarea.form-control.input-sm(name="message" rows="4")
-                div.form-group
-                  input.btn.btn--secondary(type="submit" value="Send")
+  div.background
+    div.container-fluid
+      div.row
+        div.col-xs-12
+          h1 Dashboard
+      div.row
+        div.col-xs-12.col-md-4
+          div.panel.panel-default.panel--left-image(data-toggle="modal" data-target="#modal-profile" data-user-id="")
+            div.panel-body
+              img.panel__image(src="/images/placeholderPics/avatar2.png" height="150")
+              h2.h4 {subtopic} in {topic}
+              p by {username}
+              p {ratio}
+        div.col-xs-12.col-md-4
+          div.panel.panel-default.panel--left-image
+            div.panel-body
+              img.panel__image(src="/images/placeholderPics/avatar5.gif" height="150")
+              span This is Panel Number 2
+        div.col-xs-12.col-md-4
+          div.panel.panel-default
+            div.panel-body
+              span This is Panel Number 3
+      div.row
+        div.col-xs-12.col-md-4
+          div.panel.panel-default
+            div.panel-body
+              span This is Panel Number 1
+        div.col-xs-12.col-md-4
+          div.panel.panel-default
+            div.panel-body
+              span This is Panel Number 2
+        div.col-xs-12.col-md-4
+          div.panel.panel-default
+            div.panel-body
+              span This is Panel Number 3
+      div.row
+        div.col-xs-12.col-md-4
+          div.panel.panel-default
+            div.panel-body
+              span This is Panel Number 1
+        div.col-xs-12.col-md-4
+          div.panel.panel-default
+            div.panel-body
+              span This is Panel Number 2
+        div.col-xs-12.col-md-4
+          div.panel.panel-default
+            div.panel-body
+              span This is Panel Number 3
+      div.row
+        div.col-xs-12.col-md-4
+          div.panel.panel-default
+            div.panel-body
+              span This is Panel Number 1
+        div.col-xs-12.col-md-4
+          div.panel.panel-default
+            div.panel-body
+              span This is Panel Number 2
+        div.col-xs-12.col-md-4
+          div.panel.panel-default
+            div.panel-body
+              span This is Panel Number 3
+      div.modal#modal-profile(tabindex="-1" role="dialog" aria-labelledby="modal-profile")
+        div.modal-dialog.modal-lg(role="document")
+          div.modal-content
+            div.modal-header
+              button.close(type="button" data-dismiss="modal" aria-label="Close")
+                span(aria-hidden="true") &times;
+              h2.modal-title.h3#modal-profile {username}
+            div.modal-body
+              div.profile__info
+                img.profile__image(src="/images/placeholderPics/avatar2.png")
+                div.row
+                  div.col-xs-12
+                    h3 {topic}
+                    h4 {subtopic}
+                    p {gender}
+                    p {location}
+              div.profile__send-message
+                h3 Send {username} a message
+                form(action="/api/message" method="post")
+                  div.form-group
+                    label(for="name") Name
+                    input.form-control.input-sm(type="text" name="name")
+                  div.form-group
+                    label(for="email") Email
+                    input.form-control.input-sm(type="text" name="email")
+                  div.form-group
+                    label(for="message") Message
+                    textarea.form-control.input-sm(name="message" rows="4")
+                  div.form-group
+                    input.btn.btn--secondary(type="submit" value="Send")
 
 block templates
   script#select-option-template(type="text/x-handlebars-template")
