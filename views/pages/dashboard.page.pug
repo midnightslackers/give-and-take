@@ -1,17 +1,91 @@
 extends ../layouts/dashboard.layout.pug
 
 block content
-  div.row
-    div.col-xs-12.col-sm-4
-      div.panel.panel-default
-        div.panel-body
-          img(src="/testpic.png" width="100")
-          span This is Panel Number 1
-    div.col-xs-12.col-sm-4
-      div.panel.panel-default
-        div.panel-body
-          span This is Panel Number 2
-    div.col-xs-12.col-sm-4
-      div.panel.panel-default
-        div.panel-body
-          span This is Panel Number 3
+  div.container-fluid
+    div.row
+      div.col-xs-12
+        h1 Dashboard
+    div.row
+      div.col-xs-12.col-md-4
+        div.panel.panel-default.panel--left-image
+          div.panel-body
+            img.panel__image(src="/images/placeholderPics/avatar2.png" height="150")
+            h2.h4 {subtopic} in {topic}
+            p by {username}
+            p {ratio}
+      div.col-xs-12.col-md-4
+        div.panel.panel-default.panel--left-image
+          div.panel-body
+            img.panel__image(src="/images/placeholderPics/avatar5.gif" height="150")
+            span This is Panel Number 2
+      div.col-xs-12.col-md-4
+        div.panel.panel-default
+          div.panel-body
+            span This is Panel Number 3
+    div.row
+      div.col-xs-12.col-md-4
+        div.panel.panel-default
+          div.panel-body
+            span This is Panel Number 1
+      div.col-xs-12.col-md-4
+        div.panel.panel-default
+          div.panel-body
+            span This is Panel Number 2
+      div.col-xs-12.col-md-4
+        div.panel.panel-default
+          div.panel-body
+            span This is Panel Number 3
+    div.row
+      div.col-xs-12.col-md-4
+        div.panel.panel-default
+          div.panel-body
+            span This is Panel Number 1
+      div.col-xs-12.col-md-4
+        div.panel.panel-default
+          div.panel-body
+            span This is Panel Number 2
+      div.col-xs-12.col-md-4
+        div.panel.panel-default
+          div.panel-body
+            span This is Panel Number 3
+    div.row
+      div.col-xs-12.col-md-4
+        div.panel.panel-default
+          div.panel-body
+            span This is Panel Number 1
+      div.col-xs-12.col-md-4
+        div.panel.panel-default
+          div.panel-body
+            span This is Panel Number 2
+      div.col-xs-12.col-md-4
+        div.panel.panel-default
+          div.panel-body
+            span This is Panel Number 3
+    button.btn.btn-primary.btn-lg(data-toggle="modal" data-target="#modal-profile") Launch
+    div.modal.fade#modal-profile(tabindex="-1" role="dialog" aria-labelledby="modal-profile")
+      div.modal-dialog.modal-lg(role="document")
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+            h2.modal-title.h4#modal-profile {username}
+          div.modal-body
+            div
+              img.pull-left(src="/images/placeholderPics/avatar2.png")
+              h3 {topic}
+              h4 {subtopic}
+              p {gender}
+              p {location}
+              //- p {personal-message}
+            div
+              h3 Send {username} a message
+              form
+                div.form-group
+                  label(for="name") Name
+                  input.form-control(type="text" name="name")
+                div.form-group
+                  label(for="email") Email
+                  input.form-control(type="text" name="email")
+                div.form-group
+                  label(for="message") Message
+                  textarea.form-control(name="message")
