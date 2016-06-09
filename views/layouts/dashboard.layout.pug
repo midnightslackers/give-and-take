@@ -12,10 +12,10 @@ html(lang="en")
         div.container-fluid
           div.navbar-header
             button.navbar-toggle.collapsed(data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false")
-              span.sr-only toggle navigation
-              span.icon-bar
-              span.icon-bar
-              span.icon-bar
+              span.sr-only Toggle Navigation
+              span.glyphicon.glyphicon-menu-hamburger(aria-hidden="true")
+            button.navbar-toggle.collapsed(data-toggle="collapse" data-target="#search-collapse" title="Search by Filter")
+              span.glyphicon.glyphicon-search(aria-hidden="true")
             a.navbar-brand(href="/dashboard")
               img(src="/images/GTL3.png" height="46")
           div.collapse.navbar-collapse#navbar-collapse
@@ -26,7 +26,7 @@ html(lang="en")
                 a(href="/about") About
               li
                 a(href="#logout") Log Out
-    aside.aside
+    aside.aside.collapse#search-collapse
       div.container-fluid
         div.row
           div.col-xs-12
@@ -53,8 +53,11 @@ html(lang="en")
                   span Other
     main.main
       block content
-    footer.footer
-      p Copyright &copy; 2016 <a href="https://github.com/midnightslackers">Midnight Slackers</a>. All rights reserved.
+    //- footer.footer
+    //-   div.container-fluid
+    //-     div.row
+    //-       div.col-xs-12
+    //-         p Copyright &copy; 2016 <a href="https://github.com/midnightslackers">Midnight Slackers</a>. All rights reserved.
     script(src="//code.jquery.com/jquery-1.12.4.min.js")
     script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
     script(src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js")
