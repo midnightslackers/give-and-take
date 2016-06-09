@@ -1,16 +1,16 @@
 extends ../layouts/default.layout.pug
 
 block content
-  h1.text-center Give &amp; Take
+  h1.text-center.mainHeadLine Give<span style="color:#783647">&amp;</span>Take
   //- p.text-center A completely community driven platform to share knowledge, learn from each other and teach the things your passionate about
   div.row
     div.col-xs-12.col-md-4.col-md-offset-4
-      ul
-        li <strong> share</strong> knowledge
-        li learn from each other
-        li teach topics you're passionate about
+      ul.introList
+        li <strong style="color:#783647"> share</strong> knowledge
+        li <strong>learn</strong> from each other
+        li <strong>teach</strong> topics you're passionate about
         li completely community driven
-  h4.text-center Sign up to learn about anything you can imagine for free and share your knowledge with others
+  h4.text-center.introTagLine Sign up to learn about anything you can imagine for free and share your knowledge with others
   div.row
     div.col-xs-12.col-sm-6.col-sm-offset-3
       ul.nav.nav-tabs.nav-justified(role="tablist")
