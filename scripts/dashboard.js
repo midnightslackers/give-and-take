@@ -57,14 +57,9 @@
 
         $panels.html('');
 
-        data.result.forEach(function (currentPanel, index, panels) {
-          var panelsCount = panels.length;
-          var count = index + 1;
-          var $div;
-
-          // TODO: create row after every third panels
-          if (count === 1) {
-            $div = $('<div>').addClass('row').appendTo($panels);
+        data.result.forEach(function (currentPanel, index) {
+          if (index % 3 === 0) {
+            $('<div>').addClass('row').appendTo($panels);
           }
 
           currentPanel.panelClass = 'panel panel-default js-modal-profile';
@@ -77,20 +72,20 @@
           currentPanel.subtopic = '';
 
           if (currentPanel.skills) {
-            currentPanel.topic = currentPanel.skills[0].topic;
+            currentPanel.subtopic = currentPanel.skills[0].name;
 
-            var subtopics = currentPanel.subtopic = currentPanel.skills[0].subtopics;
-
-            if (subtopics) {
-              currentPanel.subtopic = subtopics.subtopic;
-            }
+            // var subtopics = currentPanel.subtopic = currentPanel.skills[0].subtopics;
+            //
+            // if (subtopics) {
+            //   currentPanel.subtopic = subtopics.subtopic;
+            // }
           }
 
           var source = $('#panel-template').html();
           var template = Handlebars.compile(source);
           var html = template(currentPanel);
 
-          $div.append(html);
+          $panels.find('.row:last-child').append(html);
         });
       }
     });
@@ -136,12 +131,12 @@
         // var html = template(context);
       }
     });
-    
+
     $('.js-send-message').on('submit', function (e) {
       e.preventDefault();
       // grabbing field info
       // ajax POST to api/users/sender/message
-      
+
     });
   }
 
