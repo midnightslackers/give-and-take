@@ -114,6 +114,7 @@
     $('.navbar-nav, .js-panels').on('click', '.js-modal-profile', function (e) {
       e.preventDefault();
 
+      var _self = this;
       var userId = $(this).attr('data-user-id');
 
       $.ajax({
@@ -146,55 +147,36 @@
           var $modal = $('#modal-profile');
 
           $modal.find('.modal-content').html(html);
-          $modal.modal('show');
+          $modal.modal('show', _self);
         }
       });
     });
   }
 
-  function getProfile() {
-    $('#profile-modal').on('shown.bs.modal', function () {
-      $('#myInput').focus()
-    })
-
-    $.ajax({
-      url: '/api/users/' + selectedUserId,
-      type: 'GET',
-      contentType: 'application/json'
-    }).done(function(data) {
-      if (data.status === 'success') {
-        var template = $('#profile-template').html();
-
-        // TODO: handlebars
-      }
-    });
-  }
-
-  function sendMessage() {
-    var userId = localStorage.getItem('userId');
-    var senderFirstname;
-    var senderEmail;
-    $.ajax({
-      url: '/api/users/' + userId,
-      type: 'GET',
-      contentType: 'application/json',
-    }).done(function(data) {
-      if (data.status === 'success') {
-        senderFirstname = data.result.firstname;
-        senderEmail = data.result.username;
-        // TO DO : autofill form with name and email
-        // var source = $('#profile-template').html();
-        // var template = Handlebars.compile(source);
-        // var context = {};
-        // var html = template(context);
-      }
-    });
-
+  function sendMessage(userId) {
     $('.js-send-message').on('submit', function (e) {
       e.preventDefault();
-      // grabbing field info
-      // ajax POST to api/users/sender/message
 
+      var dataObj = {
+        recipientId: userId,
+        senderName: e.target.elements.name.value,
+        senderEmail: e.target.elements.email.value,
+        message: e.target.elements.message.value
+      };
+
+      $.ajax({
+        url: e.target.action,
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(dataObj)
+      }).done(function (data) {
+        if (data.result.message === 'success') {
+          e.target.reset();
+
+          $('.profile__send-message').before('<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Your message has been sent.</div>');
+        }
+      });
     });
   }
 
@@ -235,6 +217,8 @@
 
           $('#modal-profile').on('hidden.bs.modal', function () {
             $(this).find('.modal-content').html('');
+          }).on('shown.bs.modal', function (e) {
+            sendMessage(e.relatedTarget.dataset.userId);
           });
 
    // = = = = = = = =   F U N C T I O N   C A L L S   = = = = = = = = = = = = = =

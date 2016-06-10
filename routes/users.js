@@ -1,10 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const notification = require('../lib/notification');
 const User = require('../models/user.model');
 const Topic = require('../models/topic.model');
 const SubTopic = require('../models/subtopic.model');
-
-const notification = require('../lib/notification');
 
 const router = module.exports = express.Router();
 const jsonParser = bodyParser.json();
@@ -72,13 +71,13 @@ router
           error: err
         });
       });
-    
+
   })
-  
-// filter users by TOPIC 
-  
+
+// filter users by TOPIC
+
   .get('/bytopic/:topicId', (req, res) => {
-    
+
     Topic.findById(req.params.topicId)
       .then(foundTopic => {
         if (foundTopic) return foundTopic;
@@ -129,7 +128,7 @@ router
         });
       });
   })
-   
+
   // ===
   .get('/:userId', (req, res) => {
     User
@@ -248,32 +247,40 @@ router
         });
       });
   });
-  
+
 // endpoint for messaging --------
-  
+
 router
   .use(jsonParser)
   .post('/:userId/message', (req, res) => {
-    notification.send(
-      req.body.recipient,
-      req.body.senderEmail,
-      req.body.senderName,
-      req.body.message,
-      function(err, json) {
-        if (err) {
-          res.json({
-            status: 'error',
-            result: 'There was a problem sending the message',
-            error: err
-          });
+    User
+      .findById(req.body.recipientId)
+      .then(user => {
+        if (user) {
+          notification.send(
+            user.username,
+            req.body.senderEmail,
+            req.body.senderName,
+            req.body.message,
+            (err, json) => {
+              if (err) {
+                res.json({
+                  status: 'error',
+                  result: 'There was a problem sending the message',
+                  error: err
+                });
+              } else {
+                res.json({
+                  status: 'success',
+                  result: json
+                });
+              }
+            });
         } else {
           res.json({
-            status: 'success',
-            result: json,
+            status: 'error',
+            result: `RESOURCE NOT FOUND: ${req.body.recipientId} does not exist.`
           });
         }
-        
-      }
-    );
+      });
   });
-  
