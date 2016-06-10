@@ -99,8 +99,7 @@ GET /api/subtopics/:subtopicId
 
 ```
 GET /api/topics/
-
-
+```
 
 ## Credits
 
