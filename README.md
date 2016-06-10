@@ -12,12 +12,12 @@ G&T has a simple goal: to learn from each other. We believe that learning should
 6. Run `npm install`.
 7. Start your local instance of MongoDB
 8. Create a .env file in the project directory and set up the following variables  
-```
-JWT_SECRET=[your secret variable here]  
-MONGODB_URI=[the url of your instance of mongodb]  
-PORT=[your chosen port]  
-SENGRID_API_KEY=[your sengrid api key]
-```
+    ```
+    JWT_SECRET=[your secret variable here]  
+    MONGODB_URI=[the url of your instance of mongodb]  
+    PORT=[your chosen port]  
+    SENGRID_API_KEY=[your sengrid api key]
+    ```
 8. Run `npm run dev`.
 
 
