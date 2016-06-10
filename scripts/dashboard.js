@@ -55,17 +55,25 @@
   function selectTopicListener() {
     $('#filter-topic').on('change', function () {
       var topicId = $(this).val();
-
-      populateSubtopics();
-      getPanels('/api/users/bytopic/' + topicId);
+      if (topicId == 'all') {
+        getPanels('/api/users');
+      } 
+      else {
+        populateSubtopics();
+        getPanels('/api/users/bytopic/' + topicId);
+      }
     });
   }
 
   function selectSubtopicListener() {
     $('#filter-subtopic').on('change', function () {
       var subtopicId = $(this).val();
-
-      getPanels('/api/users/bysubtopic/' + subtopicId);
+      if (subtopicId == 'all') {
+        getPanels('/api/users');
+      }
+      else {
+        getPanels('/api/users/bysubtopic/' + subtopicId);
+      }
     });
   }
 
