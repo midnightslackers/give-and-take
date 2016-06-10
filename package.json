@@ -14,6 +14,7 @@
     "test": "nf start test",
     "dev": "nf start dev",
     "build": "nf start build",
+    "postinstall": "nf start build",
     "heroku-postbuild": "nf start build"
   },
   "repository": {
