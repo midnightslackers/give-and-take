@@ -1,6 +1,6 @@
-# Give and Take [![Build Status](https://travis-ci.org/midnightslackers/give-and-take.svg?branch=master)](https://travis-ci.org/midnightslackers/give-and-take)
+# [Give&Take](http://give-and-take.herokuapp.com) [![Build Status](https://travis-ci.org/midnightslackers/give-and-take.svg?branch=master)](https://travis-ci.org/midnightslackers/give-and-take)
 
-Description about Give and Take.
+Description about Give&Take.
 
 ## API
 
