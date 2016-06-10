@@ -7,45 +7,49 @@
  * Main.................Elements like body, header, main, footer
  * Headings.............Heading styles
  * Links................Hyperlink styles
- * Buttons..............Button styles
- * Lists................List styles
  *
  * LAYOUT
- * Default..............Primary layout
- * Admin................Layout when logged in
+ * Default..............Layout styles for public pages
+ * Private..............Layout styles for private pages (logged in)
+ *
+ * HELPERS
+ * Misc.................Various helpers
  *
  * MODULE
- * Module...............Module description
+ * Nav..................Navigation styles
+ * Buttons..............Button styles
+ * Forms................Form styles
+ * Tabs.................Tab styles
+ * Panels...............Panel styles
+ * Profiles.............Profile styles
  *
- * STATE
- * State................State description
- *
- * THEME
- * Theme................Theme description
  *
  */
 
 /**
  * BASE
  */
-@import '_base';
+@import '_base.main';
+@import '_base.headings';
+@import '_base.links';
+
+/**
+ * HELPERS
+ */
+@import '_helpers.misc';
 
 /**
  * LAYOUT
  */
-@import '_layout'
+@import '_layout.default';
+@import '_layout.private';
 
 /**
  * MODULE
  */
-@import '_module'
-
-/**
- * STATE
- */
-@import '_state'
-
-/**
- * THEME
- */
-@import '_theme'
+@import '_module.nav';
+@import '_module.buttons';
+@import '_module.forms';
+@import '_module.tabs';
+@import '_module.panels';
+@import '_module.profiles';
