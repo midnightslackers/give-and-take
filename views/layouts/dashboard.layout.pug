@@ -40,18 +40,21 @@ html(lang="en")
               select.form-control.input-sm.js-filter-subtopics#filter-subtopic(name="subtopic")
                 option(value disabled selected) Choose subtopic
             div.form-group
-              label(for="filter-gender-male") Gender
-              div
-                label.radio-inline(for="filter-gender-all")
+              label(for="filter-gender-all") Gender
+              div.radio.radio--first
+                label(for="filter-gender-all")
                   input#filter-gender-all(type="radio" name="gender" value="all")
                   span All
-                label.radio-inline(for="filter-gender-male")
+              div.radio
+                label(for="filter-gender-male")
                   input#filter-gender-male(type="radio" name="gender" value="male")
                   span Male
-                label.radio-inline(for="filter-gender-female")
+              div.radio
+                label(for="filter-gender-female")
                   input#filter-gender-female(type="radio" name="gender" value="female")
                   span Female
-                label.radio-inline(for="filter-gender-other")
+              div.radio
+                label(for="filter-gender-other")
                   input#filter-gender-other(type="radio" name="gender" value="other")
                   span Other
     main.main
