@@ -17,7 +17,7 @@
         var filter = $('#filter-topic');
 
         $.each(topicObjList, function() {
-          filter.append($('<option />').val(this._id).text(this.name));
+          filter.append($('<option>').val(this._id).text(this.name));
         });
       }
     });
@@ -41,11 +41,11 @@
         filter.html('<option value="all" selected="">All Topics</option>');
         if (selectedId == 'all') {
           $.each(data.result, function() {
-            filter.append($('<option />').val(this._id).text(this.name + ' - ' + this.topic.name));
+            filter.append($('<option>').val(this._id).text(this.name + ' - ' + this.topic.name));
           });
         } else {
           $.each(data.result.subTopics, function() {
-            filter.append($('<option />').val(this._id).text(this.name + ' - ' + this.topic.name));
+            filter.append($('<option>').val(this._id).text(this.name + ' - ' + this.topic.name));
           });
         }
       }
@@ -54,7 +54,10 @@
 
   function selectTopicListener() {
     $('#filter-topic').on('change', function () {
+      var topicId = $(this).val();
+
       populateSubtopics();
+      getPanels('/api/users/bytopic/' + topicId);
     });
   }
 
