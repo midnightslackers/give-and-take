@@ -25,7 +25,7 @@ block content
                   label(for="register-last-name") Last Name
                   input.form-control.input-sm#register-last-name(type="input" name="last_name" autocomplete="off" required)
             div.form-group
-              label(for="register-username") Username
+              label(for="register-username") Email
               input.form-control.input-sm#register-username(type="email" name="username" autocomplete="off" required)
             div.form-group
               label(for="password") Password
@@ -48,13 +48,13 @@ block content
                 option(value disabled) Choose a Major Topic
             div.form-group
               label(for="register-subtopics") Subtopic
-              input.form-control.input-sm#register-subtopics(type="input" name="subtopics" autocomplete="off" required)
+              input.form-control.input-sm#register-subtopics(type="input" name="subtopics" required)
             div.form-group
               input.btn.btn--secondary(type="submit" value="Register")
         div#login.tab-pane(role="tabpanel")
           form.login-form(action="/api/auth/login" method="post")
             div.form-group
-              label(for="login-username") Username
+              label(for="login-username") Email
               input.form-control#login-username(type="email" name="username" autocomplete="off" required)
             div.form-group
               label(for="login-password") Password
