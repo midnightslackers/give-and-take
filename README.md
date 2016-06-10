@@ -1,6 +1,6 @@
 # [Give&Take](http://give-and-take.herokuapp.com) [![Build Status](https://travis-ci.org/midnightslackers/give-and-take.svg?branch=master)](https://travis-ci.org/midnightslackers/give-and-take)
 
-G&amp;T has a simple goal: to learn from each other. We believe that learning should be fun and free as well as bring people together. G&amp;T is all about community and teaching each other. You get to learn as much as you want - as long as you also teach others.
+G&T has a simple goal: to learn from each other. We believe that learning should be fun and free as well as bring people together. G&T is all about community and teaching each other. You get to learn as much as you want - as long as you also teach others.
 
 ## Getting Started for Development
 
@@ -11,7 +11,7 @@ G&amp;T has a simple goal: to learn from each other. We believe that learning sh
 5. Run `cd give-and-take`.
 6. Run `npm install`.
 7. Start your local instance of MongoDB
-8. Create a .env file in the project directory and set up the following variables
+8. Create a .env file in the project directory and set up the following variables  
   ```
   JWT_SECRET=[your secret variable here]
   MONGODB_URI=[the url of your instance of mongodb]
