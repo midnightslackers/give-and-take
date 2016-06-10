@@ -76,13 +76,15 @@
       contentType: 'application/json'
     }).done(function (data) {
       if (data.status === 'success' && data.result) {
+        console.log('ajax done and success');
+        console.log('data.result:', data.result);
         var $panels = $('.panels');
 
         $panels.html('');
 
-        data.result.filter(function (currentPanel) {
+        data.result.filter(function(currentPanel) {
           return currentPanel._id !== localStorage.userId;
-        }).forEach(function (currentPanel, index) {
+        }).forEach(function(currentPanel, index) {
           if (index % 3 === 0) {
             $('<div>').addClass('row').appendTo($panels);
           }
@@ -96,6 +98,8 @@
           }
 
           if (currentPanel.skills) {
+            console.log('panel skills name:', currentPanel.skills[0].name);
+            console.log('panel skills topic:', currentPanel.skills[0].topic.name);
             currentPanel.subtopic = currentPanel.skills[0].name;
             currentPanel.topic = currentPanel.skills[0].topic.name;
           }
