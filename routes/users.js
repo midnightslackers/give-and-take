@@ -137,6 +137,42 @@ router
       });
   })
    
+   
+  .get('/bygender/:gender', (req, res) => {
+    User
+      .find({
+        gender: req.params.gender
+      })
+      .populate({
+        path: 'skills',
+        populate: {
+          path: 'topic'
+        }
+      })
+      .then(userList => {
+        let resObj = {
+          status: 'error',
+          result: 'There are no users with matching gender'
+        };
+
+        if (userList.length > 0) {
+          resObj.status = 'success';
+          resObj.result = userList;
+        }
+
+        res.json(resObj);
+      })
+      .catch(err => {
+        res.json({
+          status: 'error',
+          result: 'Server error',
+          error: err
+        });
+      });
+    
+  }) 
+   
+   
   // ===
   .get('/:userId', (req, res) => {
     User

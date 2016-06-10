@@ -42,8 +42,11 @@ html(lang="en")
             div.form-group
               label(for="filter-gender-male") Gender
               div
+                label.radio-inline(for="filter-gender-all")
+                  input#filter-gender-all(type="radio" name="gender" value="all")
+                  span All
                 label.radio-inline(for="filter-gender-male")
-                  input#filter-gender-male(type="radio" name="gender" value="Male")
+                  input#filter-gender-male(type="radio" name="gender" value="male")
                   span Male
                 label.radio-inline(for="filter-gender-female")
                   input#filter-gender-female(type="radio" name="gender" value="female")

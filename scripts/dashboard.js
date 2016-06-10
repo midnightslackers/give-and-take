@@ -64,6 +64,18 @@
       }
     });
   }
+  
+  function selectGenderListener() {
+    $('input[type=radio][name=gender]').on('change', function() {
+      var selectedGender = $(this).val();
+      if (selectedGender == 'all') {
+        getPanels('/api/users');
+      }
+      else {
+        getPanels('/api/users/bygender/' + selectedGender);
+      }    
+    });
+  }
 
   function selectSubtopicListener() {
     $('#filter-subtopic').on('change', function () {
@@ -84,8 +96,6 @@
       contentType: 'application/json'
     }).done(function (data) {
       if (data.status === 'success' && data.result) {
-        console.log('ajax done and success');
-        console.log('data.result:', data.result);
         var $panels = $('.panels');
 
         $panels.html('');
@@ -106,8 +116,6 @@
           }
 
           if (currentPanel.skills) {
-            console.log('panel skills name:', currentPanel.skills[0].name);
-            console.log('panel skills topic:', currentPanel.skills[0].topic.name);
             currentPanel.subtopic = currentPanel.skills[0].name;
             currentPanel.topic = currentPanel.skills[0].topic.name;
           }
@@ -258,6 +266,7 @@
           getPanels('/api/users');
           selectTopicListener();
           selectSubtopicListener();
+          selectGenderListener();
           logout();
 
    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
