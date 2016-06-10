@@ -135,11 +135,7 @@ router
         });
       });
   })
-<<<<<<< HEAD
 
-=======
-   
-   
   .get('/bygender/:gender', (req, res) => {
     User
       .find({
@@ -171,11 +167,9 @@ router
           error: err
         });
       });
-    
-  }) 
-   
-   
->>>>>>> 40684bdbf16cd3bde831402b66386abdb39cb4e7
+
+  })
+
   // ===
   .get('/:userId', (req, res) => {
     User
