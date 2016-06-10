@@ -56,6 +56,7 @@
     $('#filter-topic').on('change', function () {
       var topicId = $(this).val();
       if (topicId == 'all') {
+        populateSubtopics();
         getPanels('/api/users');
       } 
       else {
