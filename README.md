@@ -1,4 +1,4 @@
-# Give and Take [![Build Status](https://travis-ci.org/midnightslackers/give-and-take.svg?branch=master)](https://travis-ci.org/midnightslackers/give-and-take) [![Stories in Ready](https://badge.waffle.io/midnightslackers/give-and-take.svg?label=ready&title=Ready)](http://waffle.io/midnightslackers/give-and-take)
+# Give and Take [![Build Status](https://travis-ci.org/midnightslackers/give-and-take.svg?branch=master)](https://travis-ci.org/midnightslackers/give-and-take)
 
 Description about Give and Take.
 
