@@ -60,13 +60,15 @@
 
   function selectSubtopicListener() {
     $('#filter-subtopic').on('change', function () {
+      var subtopicId = $(this).val();
 
+      getPanels('/api/users/bysubtopic/' + subtopicId);
     });
   }
 
-  function getPanels() {
+  function getPanels(ajaxUrl) {
     $.ajax({
-      url: '/api/users',
+      url: ajaxUrl,
       type: 'GET',
       contentType: 'application/json'
     }).done(function (data) {
@@ -234,13 +236,13 @@
 
    // = = = = = = = =   F U N C T I O N   C A L L S   = = = = = = = = = = = = = =
 
-          selectTopicListener();
-          selectSubtopicListener();
           populateTopics();
           populateSubtopics();
           populateUser(localStorage.userId, localStorage.firstname);
           selectPanel();
-          getPanels();
+          getPanels('/api/users');
+          selectTopicListener();
+          selectSubtopicListener();
           logout();
 
    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
