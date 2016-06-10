@@ -46,6 +46,12 @@ router
       .find({
         skills: req.params.subtopicId
       })
+      .populate({
+        path: 'skills',
+        populate: {
+          path: 'topic'
+        }
+      })
       .then(userList => {
         let resObj = {
           status: 'error',
@@ -94,6 +100,12 @@ router
         User
           .find({
             skills: subId
+          })
+          .populate({
+            path: 'skills',
+            populate: {
+              path: 'topic'
+            }
           })
           .then(userList => {
             let resObj = {
