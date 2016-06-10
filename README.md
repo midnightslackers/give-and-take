@@ -2,55 +2,51 @@
 
 Description about Give&Take.
 
+## Getting Started
+
+1. Install [Node.js](https://nodejs.org/en/).
+2. Install [MongoDB](https://docs.mongodb.com/manual/installation/).
+3. Install [Postman](https://www.getpostman.com).
+4. Run `git clone https://github.com/DonChatelain/express-mongo-rest-api.git`.
+5. Run `cd express-mongo-rest-api`.
+6. Run `npm install`.
+7. Run `npm start`.
+8. Use Postman to make requests.
+
 ## API
-
-### Topics
-
-#### Retrieve All Users by Topic Category
-
-```
-GET /api/topics/:category
-```
-
-#### Retrieve All Users by Topic Category and Subcategory
-
-```
-GET /api/topics/:category/:subcategory
-```
-
-#### Create Topic Subcategory
-
-```
-POST /api/topics/:category/:subcategory
-```
 
 ### Users
 
 #### Retrieve All Users
 
-Description for retrieve all users.
-
 ```
 GET /api/users
 ```
 
-#### Retrieve Single User
-
-Description for retrieve single user.
+#### Retrieve One User by ID
 
 ```
-GET /api/users/:id
+GET /api/users/:userId
 ```
 
-#### Create User
-
-Description for create user.
+#### Retrieve Users by Subtopic
 
 ```
-POST /api/users
+GET /api/users/bysubtopic/:subTopicId
 ```
 
-##### Input
+#### Retrieve Users by Gender
+Options: male, female, other
+```
+GET /api/users/bygender/:gender
+```
+
+#### Registering a new User
+In order to properly create a new User the below fields are required.
+```
+POST /api/auth/register
+```
+
 
 | Name                | Type     | Description |
 | ------------------- | -------- | ----------- |
@@ -59,7 +55,57 @@ POST /api/users
 | `gender`            | `string` | Either `male` or `female` for this user. |
 | `email`             | `string` | An `email` will be used for this user to log into their account. |
 | `password`          | `string` | A secret `password` for this user to log into their account. |
-| `confirm_password`  | `string` | Matches `password` for confirmation. |
+| `zip`               | `number` | The location of the User by zip code. |
+| `subtopic`          | `string` | The specific skill the User wants to teach. |
+| `topic`             | `string` | The category of the skill the User wants to teach |
+
+
+### Topics
+
+#### Retrieve All Topics
+
+```
+GET /api/topics
+```
+
+#### Retrieve One Topic by Id
+
+```
+GET /api/topics/:topicId
+```
+
+#### Retrieve All Subtopics
+
+```
+GET /api/subtopics
+```
+
+#### Retrieve One Subtopic by Id
+
+```
+GET /api/subtopics/:subtopicId
+```
+
+#### Retrieve All Subtopics by Topic
+
+```
+GET /api/topics/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### Modify User
 
