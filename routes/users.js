@@ -86,20 +86,27 @@ router
       })
       .then(foundTopic => {
         return SubTopic
-          .findOne({
+          .find({
             topic: foundTopic._id
           });
       })
-      .then(sub => {
-        if (sub) return sub._id;
+      .then(subList => {
+        if (subList) {
+
+          return subList.map(sub => {
+            return sub._id;
+          });
+        }
         else {
           throw `${foundTopic.name} has no subtopics`;
         }
       })
-      .then(subId => {
+      .then(subIdArray => {
         User
           .find({
-            skills: subId
+            skills: {
+              $in: subIdArray
+            }
           })
           .populate({
             path: 'skills',
