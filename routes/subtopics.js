@@ -8,7 +8,6 @@ router
   .get('/', (req, res) => {
     SubTopic
       .find({})
-      // .select('name')
       .populate('topic')
       .lean()
       .then(subs => {

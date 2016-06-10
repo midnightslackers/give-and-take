@@ -93,8 +93,6 @@ router
       });
   });
 
-//   Login
-
 router
   .post('/login', jsonParser, (req, res) => {
     const input = {
