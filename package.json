@@ -13,7 +13,8 @@
     "start": "nf start web",
     "test": "nf start test",
     "dev": "nf start dev",
-    "build": "nf start build"
+    "build": "nf start build",
+    "heroku-postbuild": "nf start build"
   },
   "repository": {
     "type": "git",
@@ -35,9 +36,6 @@
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "foreman": "^1.4.1",
-    "gulp": "^3.9.1",
-    "gulp-run": "^1.6.12",
-    "gulp-shell": "^0.5.2",
     "jsonwebtoken": "^7.0.0",
     "mongodb": "^2.1.21",
     "mongoose": "^4.4.19",
@@ -48,6 +46,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
+    "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^2.0.0",

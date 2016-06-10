@@ -7,7 +7,6 @@ const mocha = require('gulp-mocha');
 const nodemon = require('gulp-nodemon');
 const stylus = require('gulp-stylus');
 const uglify = require('gulp-uglify');
-const shell = require('gulp-shell');
 
 gulp.task('run-clean', () => {
   return gulp.src('./public')
@@ -48,10 +47,6 @@ gulp.task('run-nodemon', () => {
   });
 });
 
-gulp.task('run-node', () => {
-  return shell.task(['node index.js']);
-});
-
 gulp.task('run-stylus', () => {
   return gulp.src(['./styles/master.styl', './styles/dashboard.styl'])
     .pipe(stylus({compress: true}))
@@ -85,8 +80,4 @@ gulp.task('dev', ['build'], () => {
 
 gulp.task('test', ['build'], () => {
   return gulp.start(['run-lint', 'run-test']);
-});
-
-gulp.task('production', ['build'], () => {
-  return gulp.start('run-node');
 });
