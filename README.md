@@ -1,17 +1,26 @@
 # [Give&Take](http://give-and-take.herokuapp.com) [![Build Status](https://travis-ci.org/midnightslackers/give-and-take.svg?branch=master)](https://travis-ci.org/midnightslackers/give-and-take)
 
-Description about Give&Take.
+G&amp;T has a simple goal: to learn from each other. We believe that learning should be fun and free as well as bring people together. G&amp;T is all about community and teaching each other. You get to learn as much as you want - as long as you also teach others.
 
-## Getting Started
+## Getting Started for Development
 
 1. Install [Node.js](https://nodejs.org/en/).
-2. Install [MongoDB](https://docs.mongodb.com/manual/installation/).
-3. Install [Postman](https://www.getpostman.com).
-4. Run `git clone https://github.com/DonChatelain/express-mongo-rest-api.git`.
-5. Run `cd express-mongo-rest-api`.
+2. Install [MongoDB](https://docs.mongodb.com/manual/installation/)
+3. Install [npm](https://www.npmjs.com/)
+4. Run `git clone https://github.com/midnightslackers/give-and-take.git`
+5. Run `cd give-and-take`.
 6. Run `npm install`.
-7. Run `npm start`.
-8. Use Postman to make requests.
+7. Start your local instance of MongoDB
+8. Create a .env file in the project directory and set up the following variables
+  ```
+  JWT_SECRET=[your secret variable here]
+  MONGODB_URI=[the url of your instance of mongodb]
+  PORT=[your chosen port]
+  SENGRID_API_KEY=[your sengrid api key]
+  ```
+8. Run `npm run dev`.
+
+
 
 ## API
 
@@ -92,48 +101,6 @@ GET /api/subtopics/:subtopicId
 GET /api/topics/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#### Modify User
-
-Description for modify user.
-
-```
-PUT /api/users/:id
-PATCH /api/users/:id
-```
-
-#### Input
-
-| Name               | Type     | Description |
-| ------------------ | -------- | ----------- |
-| `first_name`       | `string` | The first name of a user. |
-| `last_name`        | `string` | The last name of a user.  |
-| `gender`           | `string` | Either `male` or `female` for this user. |
-| `email`            | `string` | An `email` will be used for this user to log into their account. |
-| `password`         | `string` | A secret `password` for this user to log into their account. |
-| `confirm_password` | `string` | Matches `password` for confirmation. |
-
-#### Destroy User
-
-Description for destroy user.
-
-```
-DELETE /api/users/:id
-```
 
 ## Credits
 
