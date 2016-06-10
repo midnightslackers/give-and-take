@@ -1,4 +1,4 @@
-extends ../layouts/dashboard.layout.pug
+extends ../layouts/private.layout.pug
 
 block content
   div.container-fluid
@@ -11,8 +11,6 @@ block content
         div.modal-content
 
 block templates
-  script#select-option-template(type="text/x-handlebars-template")
-    option(value="{{id}}") {{name}}
   script#panel-template(type="text/x-handlebars-template")
     div.col-xs-12.col-md-4
       div(class="{{panelClass}}" data-user-id="{{_id}}")
