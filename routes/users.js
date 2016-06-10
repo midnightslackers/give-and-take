@@ -85,20 +85,27 @@ router
       })
       .then(foundTopic => {
         return SubTopic
-          .findOne({
+          .find({
             topic: foundTopic._id
           });
       })
-      .then(sub => {
-        if (sub) return sub._id;
+      .then(subList => {
+        if (subList) {
+
+          return subList.map(sub => {
+            return sub._id;
+          });
+        }
         else {
           throw `${foundTopic.name} has no subtopics`;
         }
       })
-      .then(subId => {
+      .then(subIdArray => {
         User
           .find({
-            skills: subId
+            skills: {
+              $in: subIdArray
+            }
           })
           .populate({
             path: 'skills',
@@ -128,7 +135,47 @@ router
         });
       });
   })
+<<<<<<< HEAD
 
+=======
+   
+   
+  .get('/bygender/:gender', (req, res) => {
+    User
+      .find({
+        gender: req.params.gender
+      })
+      .populate({
+        path: 'skills',
+        populate: {
+          path: 'topic'
+        }
+      })
+      .then(userList => {
+        let resObj = {
+          status: 'error',
+          result: 'There are no users with matching gender'
+        };
+
+        if (userList.length > 0) {
+          resObj.status = 'success';
+          resObj.result = userList;
+        }
+
+        res.json(resObj);
+      })
+      .catch(err => {
+        res.json({
+          status: 'error',
+          result: 'Server error',
+          error: err
+        });
+      });
+    
+  }) 
+   
+   
+>>>>>>> 40684bdbf16cd3bde831402b66386abdb39cb4e7
   // ===
   .get('/:userId', (req, res) => {
     User

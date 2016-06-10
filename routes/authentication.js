@@ -57,8 +57,10 @@ router
         
         Topic.findById(input.topic)
             .then(topic => {
-              topic.subTopics.push(subTopicId);
-              topic.save();
+              if (topic.subTopics.indexOf(subTopicId) === -1) {
+                topic.subTopics.push(subTopicId);
+                topic.save();
+              }
             });
         
         const newUser = new User({

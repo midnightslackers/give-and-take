@@ -55,17 +55,37 @@
   function selectTopicListener() {
     $('#filter-topic').on('change', function () {
       var topicId = $(this).val();
-
-      populateSubtopics();
-      getPanels('/api/users/bytopic/' + topicId);
+      if (topicId == 'all') {
+        getPanels('/api/users');
+      } 
+      else {
+        populateSubtopics();
+        getPanels('/api/users/bytopic/' + topicId);
+      }
+    });
+  }
+  
+  function selectGenderListener() {
+    $('input[type=radio][name=gender]').on('change', function() {
+      var selectedGender = $(this).val();
+      if (selectedGender == 'all') {
+        getPanels('/api/users');
+      }
+      else {
+        getPanels('/api/users/bygender/' + selectedGender);
+      }    
     });
   }
 
   function selectSubtopicListener() {
     $('#filter-subtopic').on('change', function () {
       var subtopicId = $(this).val();
-
-      getPanels('/api/users/bysubtopic/' + subtopicId);
+      if (subtopicId == 'all') {
+        getPanels('/api/users');
+      }
+      else {
+        getPanels('/api/users/bysubtopic/' + subtopicId);
+      }
     });
   }
 
@@ -80,9 +100,9 @@
 
         $panels.html('');
 
-        data.result.filter(function (currentPanel) {
+        data.result.filter(function(currentPanel) {
           return currentPanel._id !== localStorage.userId;
-        }).forEach(function (currentPanel, index) {
+        }).forEach(function(currentPanel, index) {
           if (index % 3 === 0) {
             $('<div>').addClass('row').appendTo($panels);
           }
@@ -230,6 +250,7 @@
           getPanels('/api/users');
           selectTopicListener();
           selectSubtopicListener();
+          selectGenderListener();
           logout();
 
    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
