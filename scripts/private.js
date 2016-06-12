@@ -91,7 +91,11 @@
   }
 
   function getPanels(ajaxUrl) {
+    var token = localStorage.token;
     $.ajax({
+      beforeSend: function (request) {
+        request.setRequestHeader('token', token);
+      },
       url: ajaxUrl,
       type: 'GET',
       contentType: 'application/json'
@@ -132,6 +136,7 @@
   }
 
   function selectPanel() {
+    var token = localStorage.token;
     $('.navbar-nav, .js-panels').on('click', '.js-modal-profile', function (e) {
       e.preventDefault();
 
@@ -139,6 +144,9 @@
       var userId = $(this).attr('data-user-id');
 
       $.ajax({
+        beforeSend: function (request) {
+          request.setRequestHeader('token', token);
+        },
         url: '/api/users/' + userId,
         type: 'GET',
         contentType: 'application/json'
@@ -175,6 +183,7 @@
   }
 
   function sendMessage(userId) {
+    var token = localStorage.token;
     $('.js-send-message').on('submit', function (e) {
       e.preventDefault();
 
@@ -186,6 +195,9 @@
       };
 
       $.ajax({
+        beforeSend: function (request) {
+          request.setRequestHeader('token', token);
+        },
         url: e.target.action,
         type: 'POST',
         dataType: 'json',

@@ -58,6 +58,10 @@ gulp.task('run-test', () => {
     .pipe(mocha());
 });
 
+gulp.task('watch-test', ['run-test'], () => {
+  return gulp.watch(['./test/**/*.js'], ['run-test']);
+});
+
 gulp.task('watch-images', () => {
   return gulp.watch(['./images/*'], ['run-imagemin']);
 });
