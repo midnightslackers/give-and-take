@@ -2,9 +2,6 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const database = require('../lib/database');
 const app = require('../lib/app');
-const Subtopic = require('../models/subtopic.model');
-const Topic = require('../models/topic.model');
-const User = require('../models/user.model');
 
 const assert = chai.assert;
 const databaseConnection = database.connect(process.env.MONGODB_URI);
