@@ -6,56 +6,69 @@ const User = require('../models/user.model');
 const mongoose = require('mongoose');
 
 const assert = chai.assert;
-const db = mongoose.connect('mongodb://localhost/give-and-take');
+// const db = mongoose.connect('mongodb://localhost/give-and-take');
+const dbConnection = database.connect('mongodb://localhost/give-and-take');
 
 chai.use(chaiHttp);
 
 describe('End to End Testing', () => {
   let request = chai.request(app);
-  let user1 = JSON.stringify({'username': 'User1', 'password': 'test123', 'skills': 'piano', 'topic': 'music'});
+  let user1 = {'username': 'User1', 'password': 'test123', 'skills': 'piano', 'topic': 'music'};
 
   function parse(str) {
     return JSON.parse(str);
   }
 
-  // before(done => {
-  //   databaseConnection.on('open', () => {
-  //     done();
-  //   });
-  // });
-
-  describe('Authentication', () => {
-    
-    var id;
-
-    it ('registers new user on /register', done => {
-      request
-        .post('/api/auth/register')
-        .set('Content-Type', 'application/json')
-        .send(user1)
-        .end((err, res) => {
-          if (err) console.log(err);
-          const actual = parse(res.text);
-          assert.equal(actual.status, 'success');
-          done();
-          assert.property(actual.result, 'userId');
-          assert.property(actual.result, 'token');
-          id = actual.result.userId;
-          id = id.replace(/^"(.*)"$/, '$1');
-          assert.equal(id, 'fuck');
-        });
-    });
-    
-    it('deletes new user on /register', done => {
-      console.log(`/api/users/${id}`);
-      request
-        .del(`/api/users/${id}`)
-        .end((err, res) => {
-          const actual = parse(res.text);
-          assert.deepEqual(actual.status, 'success');
+  before(done => {
+    dbConnection.on('open', () => {
+      User
+        .remove({})
+        .then(() => {
           done();
         });
     });
+  });
+
+  // describe('Authentication', () => {
+    
+    // it ('registers new user on /register', done => {
+    //   request
+    //     .post('/api/auth/register')
+    //     .set('Content-Type', 'application/json')
+    //     .send(user1)
+    //     .end((err, res) => {
+
+    //       done();
+    //       const actual = parse(res.text);
+    //       assert.property(actual.result, 'userId');
+    //       assert.property(actual.result, 'token');
+    //       id = actual.result.userId;
+    //       id = id.replace(/^"(.*)"$/, '$1');
+    //       assert.equal(id, 'whomp');
+    //     });
+    // });
+    
+  it('Retrieves all Subtopics', done => {
+    request
+      .get('/api/subtopics')
+      .then(r => {
+        // const res = parse(r);
+        assert.equal(r, 'fuck');
+        done();
+      })
+  });
+    
+    // it('deletes new user on /register', done => {
+    //   console.log(`/api/users/${id}`);
+    //   request
+    //     .del('/api/users/575e08ae9df8d6401a8940b1')
+    //     .set({'token': '575e08ae9df8d6401a8940b1'})
+    //     .end((err, res) => {
+    //       const actual = parse(res.text);
+    //       assert.deepEqual(actual.error.message, 'success');
+    //       done();
+    //     });
+    // });
     
   
     
@@ -285,10 +298,10 @@ describe('End to End Testing', () => {
 
   // });
 
-  after(done => {
-    db.disconnect();
+  // after(done => {
+  //   db.disconnect();
 
-    done();
-  });
+  //   done();
+  // });
 
-});
+// });
