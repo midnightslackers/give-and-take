@@ -54,8 +54,30 @@ gulp.task('run-stylus', () => {
 });
 
 gulp.task('run-test', () => {
+  let mochaErr;
+  let handleMochaError = (err) => {
+    console.log('Mocha encountered an error, exiting with status 1');
+    console.log('Error:', err.message);
+    process.exit(1);
+  };
+
   return gulp.src('./test/**/*.js', {read: false})
-    .pipe(mocha());
+    .pipe(mocha())
+    .on('error', function(err) {
+      console.error('ERROR:', err.message);
+      console.error('Stack:', err.stack);
+
+      mochaErr = err;
+    })
+    .on('end', () => {
+      if (mochaErr) return handleMochaError(mochaErr);
+
+      process.exit();
+    });
+});
+
+gulp.task('watch-test', ['run-test'], () => {
+  return gulp.watch(['./test/**/*.js'], ['run-test']);
 });
 
 gulp.task('watch-images', () => {

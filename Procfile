@@ -1,4 +1,4 @@
 web: node index.js
-test: gulp test
+test: gulp run-test
 dev: gulp dev
 build: gulp build

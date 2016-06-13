@@ -19,27 +19,27 @@ router
 
 router
   .post('/register', jsonParser, (req, res) => {
-    
     const input = {
       username: req.body.username,
       password: req.body.password,
       topic: req.body.topic,
       skills: req.body.skills
     };
+
     delete req.body.password;
-    
-// if input subtopic does not exist, create one
-    
+
+    // if input subtopic does not exist, create one
+
     const skillPromise = SubTopic.findOne({name: input.skills})
       .then(subtopic => {
-        if (subtopic) {       
-          return subtopic._id;    
+        if (subtopic) {
+          return subtopic._id;
         } else {
           return new SubTopic({name: input.skills, topic: input.topic})
             .save()
             .then(sub => {
               return sub._id;
-            });   
+            });
         }
       });
 
@@ -50,11 +50,11 @@ router
         }
       });
 
-// ------  U S E R   C R E A T I O N  ------
+    // ------  U S E R   C R E A T I O N  ------
 
     Promise.all([skillPromise, userPromise])
       .then(([subTopicId]) => {
-        
+
         Topic.findById(input.topic)
             .then(topic => {
               if (topic.subTopics.indexOf(subTopicId) === -1) {
@@ -62,7 +62,7 @@ router
                 topic.save();
               }
             });
-        
+
         const newUser = new User({
           username: input.username,
           firstname: req.body.firstname,
@@ -127,7 +127,7 @@ router
         token.sign(foundUser)
           .then(userObj => {
             res.json({
-              status: 'success', 
+              status: 'success',
               result: userObj
             });
           })

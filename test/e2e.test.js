@@ -2,7 +2,6 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const database = require('../lib/database');
 const app = require('../lib/app');
-const User = require('../models/user.model');
 
 const assert = chai.assert;
 const databaseConnection = database.connect(process.env.MONGODB_URI);
@@ -11,75 +10,211 @@ chai.use(chaiHttp);
 
 describe('End to End Testing', () => {
   let request = chai.request(app);
+  let user1 = {
+    firstname: 'User',
+    lastname: '1',
+    username: 'User1',
+    password: 'test123',
+    gender: 'male',
+    zip: 97204,
+    skills: 'piano'
+  };
+  let id;
   let token;
-  let user1 = {username: 'user1', password: 'test123'};
 
   before(done => {
     databaseConnection.on('open', () => {
-      User.remove({})
-        .then(done());
+      databaseConnection.collections['subtopics'].drop();
+      databaseConnection.collections['topics'].drop();
+      databaseConnection.collections['users'].drop();
+      done();
     });
+  });
+
+  describe('Topics', () => {
+
+    let topic1 = {};
+
+    it('creates a topic', done => {
+      let expected = {
+        name: 'History'
+      };
+
+      request
+        .post('/api/topics')
+        .set('Content-Type', 'application/json')
+        .send(expected)
+        .end((err, res) => {
+          if (err) return done(err);
+
+          let actual = res.body;
+
+          assert.property(actual, 'status');
+          assert.equal(actual.status, 'success');
+          assert.property(actual, 'result');
+          assert.property(actual.result, '_id');
+          assert.property(actual.result, 'name');
+          assert.equal(actual.result.name, expected.name);
+
+          topic1.id = actual.result._id;
+          topic1.name = actual.result.name;
+
+          user1.topic = actual._id;
+
+          done();
+        });
+    });
+
+    it('gets all topics', done => {
+      request
+        .get('/api/topics')
+        .set('Content-Type', 'application/json')
+        .end((err, res) => {
+          if (err) return done(err);
+
+          let actual = res.body;
+
+          assert.property(actual, 'status');
+          assert.equal(actual.status, 'success');
+          assert.property(actual, 'result');
+          assert.property(actual.result[0], '_id');
+          assert.equal(actual.result[0]._id, topic1.id);
+          assert.property(actual.result[0], 'name');
+          assert.equal(actual.result[0].name, topic1.name);
+
+          done();
+        });
+    });
+
+    it('gets a topic by id', done => {
+      request
+        .get(`/api/topics/${topic1.id}`)
+        .set('Content-Type', 'application/json')
+        .end((err, res) => {
+          if (err) return done(err);
+
+          let actual = res.body;
+
+          assert.property(actual, 'status');
+          assert.equal(actual.status, 'success');
+          assert.property(actual, 'result');
+          assert.property(actual.result, '_id');
+          assert.equal(actual.result._id, topic1.id);
+          assert.property(actual.result, 'name');
+          assert.equal(actual.result.name, topic1.name);
+
+          done();
+        });
+    });
+
   });
 
   describe('Authentication', () => {
 
-    it ('registers new user on /register', done => {
+    it('registers new user on register', done => {
       request
         .post('/api/auth/register')
+        .set('Content-Type', 'application/json')
         .send(user1)
         .end((err, res) => {
-          const actual = JSON.parse(res.text);
+          if (err) return done(err);
+
+          let actual = res.body;
+
+          assert.property(actual, 'status');
           assert.equal(actual.status, 'success');
-          // assert.equal(actual.result, expected);
-          token = actual.result;
+          assert.property(actual, 'result');
+          assert.property(actual.result, 'firstname');
+          assert.property(actual.result, 'token');
+          assert.property(actual.result, 'userId');
+          assert.equal(actual.result.firstname, user1.firstname);
+
+          id = actual.result.userId;
+          token = actual.result.token;
+
           done();
         });
     });
 
-    it ('error on duplicate username input on /register', done => {
-      const expected = 'Username: user1 already exists';
+    it('error on duplicate username input on register', done => {
       request
         .post('/api/auth/register')
+        .set('Content-Type', 'application/json')
         .send(user1)
-        .end((err, res) => {
-          const actual = JSON.parse(res.text);
+        .end(err => {
+          let actual = err.response.body;
+
+          assert.property(actual, 'status');
           assert.equal(actual.status, 'error');
-          assert.equal(actual.result, expected);
+          assert.property(actual, 'result');
+          assert.equal(actual.result, 'Server error');
+          assert.property(actual, 'error');
+          assert.equal(actual.error, 'Username: User1 already exists');
+
           done();
         });
     });
 
-    it ('user success on /login', done => {
+    it('error on password mismatch on login', done => {
       request
         .post('/api/auth/login')
-        .send(user1)
-        .end((err, res) => {
-          const actual = JSON.parse(res.text);
-          assert.equal(actual.status, 'success');
-          done();
-        });
-    });
+        .set('Content-Type', 'application/json')
+        .send({
+          username: 'User1',
+          password: 'wrong'
+        })
+        .end(err => {
+          let actual = err.response.body;
 
-    it ('error on password mismatch on /login', done => {
-      request
-        .post('/api/auth/login')
-        .send({username: 'user1', password: 'wrong'})
-        .end((err, res) => {
-          const actual = JSON.parse(res.text);
+          assert.property(actual, 'status');
           assert.equal(actual.status, 'error');
+          assert.property(actual, 'result');
           assert.equal(actual.result, 'Forbidden');
+
           done();
         });
     });
 
-    it ('error on bad username on /login', done => {
+    it('error on bad username on login', done => {
       request
         .post('/api/auth/login')
-        .send({username: 'not_a_user', password: 'test123'})
-        .end((err, res) => {
-          const actual = JSON.parse(res.text);
+        .set('Content-Type', 'application/json')
+        .send({
+          username: 'not_a_user',
+          password: 'test123'
+        })
+        .end((err) => {
+          let actual = err.response.body;
+
+          assert.property(actual, 'status');
           assert.equal(actual.status, 'error');
+          assert.property(actual, 'result');
           assert.equal(actual.result, 'Username Not Found');
+
+          done();
+        });
+    });
+
+    it('user success on login', done => {
+      request
+        .post('/api/auth/login')
+        .set('Content-Type', 'application/json')
+        .send(user1)
+        .end((err, res) => {
+          if (err) return done(err);
+
+          let actual = res.body;
+
+          assert.property(actual, 'status');
+          assert.equal(actual.status, 'success');
+          assert.property(actual, 'result');
+          assert.property(actual.result, 'firstname');
+          assert.property(actual.result, 'token');
+          assert.property(actual.result, 'userId');
+          assert.equal(actual.result.firstname, user1.firstname);
+
+          token = actual.result.token;
+
           done();
         });
     });
@@ -88,7 +223,27 @@ describe('End to End Testing', () => {
 
   describe('User', () => {
 
-    it('Posts one user to users collection', done => {
+    it.skip('deletes new user on /register', done => {
+      request
+        .del(`/api/users/${id}`)
+        .set('Content-Type', 'application/json')
+        .set('token', token)
+        .end((err, res) => {
+          if (err) return done(err);
+
+          let actual = res.body;
+
+          assert.property(actual, 'status');
+          assert.equal(actual.status, 'success');
+          assert.property(actual, 'result');
+          assert.property(actual.result, '_id');
+          assert.equal(actual.result._id, id);
+
+          done();
+        });
+    });
+
+    it.skip('Posts one user to users collection', done => {
       let myUserName = 'Johnny';
       let myPassword = '123';
 
@@ -119,7 +274,7 @@ describe('End to End Testing', () => {
         });
     });
 
-    it('Posts another user and gets three users', done => {
+    it.skip('Posts another user and gets three users', done => {
       let myUserName = 'Don';
       let myPassword = 'abc';
 
@@ -152,18 +307,22 @@ describe('End to End Testing', () => {
         .set('content-type', 'application/json')
         .set('token', token)
         .then(res => {
-          let resObj = JSON.parse(res.text);
-
           assert.equal(res.status, 200);
-          assert.property(resObj, 'status');
-          assert.property(resObj, 'result');
-          assert.equal(resObj.status, 'success');
-          assert.isArray(resObj.result);
+          assert.property(res.body, 'status');
+          assert.equal(res.body.status, 'success');
+          assert.property(res.body, 'result');
+          assert.isArray(res.body.result);
 
-          resObj.result.forEach(user => {
+          res.body.result.forEach(user => {
             assert.property(user, '_id');
             assert.property(user, 'username');
             assert.property(user, 'password');
+            assert.property(user, 'firstname');
+            assert.property(user, 'lastname');
+            assert.property(user, 'gender');
+            assert.property(user, 'zip');
+            assert.property(user, 'skills');
+            assert.property(user, 'admin');
             assert.property(user, 'createdAt');
             assert.property(user, 'updatedAt');
           });
@@ -172,14 +331,16 @@ describe('End to End Testing', () => {
         });
     });
 
-    it('Throws specific validation error on name requirement', done => {
+    it.skip('Throws specific validation error on name requirement', done => {
       let expected = 'User Creation Failed';
 
       request
         .post('/api/users')
         .set('content-type', 'application/json')
         .set('token', token)
-        .send({'password': 'secret123'})
+        .send({
+          'password': 'secret123'
+        })
         .end((err, res) => {
           let resObj = JSON.parse(res.text);
 
@@ -189,7 +350,7 @@ describe('End to End Testing', () => {
         });
     });
 
-    it('Gets one user', done => {
+    it.skip('Gets one user', done => {
       request
         .get('/api/users/johnny')
         .set('content-type', 'application/json')
@@ -203,7 +364,7 @@ describe('End to End Testing', () => {
         });
     });
 
-    it('Puts "jluangphasy" as new username for johnny', done => {
+    it.skip('Puts "jluangphasy" as new username for johnny', done => {
       request
         .put('/api/users/Johnny')
         .set('content-type', 'application/json')
@@ -226,7 +387,7 @@ describe('End to End Testing', () => {
         });
     });
 
-    it('Deletes one user, then all of the others', done => {
+    it.skip('Deletes one user, then all of the others', done => {
       request
         .del('/api/users/jluangphasy')
         .set('content-type', 'application/json')
@@ -261,9 +422,7 @@ describe('End to End Testing', () => {
   });
 
   after(done => {
-    // databaseConnection.close();
-    process.exit(0);
-    done();
+    databaseConnection.close(done);
   });
 
 });

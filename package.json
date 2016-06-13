@@ -1,6 +1,6 @@
 {
   "name": "give-and-take",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "G&T has a simple goal: to learn from each other. We believe that learning should be fun and free as well as bring people together. G&T is all about community and teaching each other. You get to learn as much as you want - as long as you also teach others.",
   "main": "index.js",
   "engines": {
