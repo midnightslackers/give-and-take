@@ -26,7 +26,7 @@ router
         res.json(resObj);
       });
   })
-  // Retrieve Single Topic object 
+  // Retrieve Single Topic object
   .get('/:topicId', (req, res) => {
     Topic
       .findById(req.params.topicId)
@@ -60,12 +60,12 @@ router
       });
   });
 
-  
+
 // Retrieve One Subtopic in Specified topic  !!! May have to change format of result
 
-router  
+router
   .get('/:topicId/:subTopicId', (req, res) => {
-    SubTopic 
+    SubTopic
       .findOne({
         _id: req.params.subTopicId
       })
@@ -81,7 +81,7 @@ router
         }
 
         res.json(resObj);
-    
+
       })
       .catch(err => {
         res.json({
@@ -91,8 +91,8 @@ router
         });
       });
   });
-  
-  
+
+
 // POST new subtopic & Push new subtopic into a specific topic
 router
   .use(jsonParser)
@@ -110,7 +110,7 @@ router
           })
           .then(topic => {
             res.json({
-              status: 'success', 
+              status: 'success',
               result: topic
             });
           })
@@ -124,13 +124,13 @@ router
       })
       .catch(err => {
         res.json({
-          status: 'error', 
+          status: 'error',
           result: 'Server error',
           error: err
         });
       });
   });
-  
+
 
 //  POST major topics ADMIN ONLY***
 router
@@ -140,7 +140,7 @@ router
         .save()
         .then(topic => {
           res.json({
-            status:'posted',
+            status: 'success',
             result: topic
           });
         }).catch(err => {
