@@ -212,6 +212,14 @@
       });
     });
   }
+  
+  function uploadImageListener() {
+    $('.modal-content').on('submit', 'form#image-uploader', function(e) {
+      e.preventDefault();
+      var fileData = e.target.elements.displayImage.value;
+      console.log(fileData);
+    });
+  }
 
   function logout() {
     $('.js-logout').on('click', function (e) {
@@ -264,6 +272,7 @@
           selectTopicListener();
           selectSubtopicListener();
           selectGenderListener();
+          uploadImageListener();
           logout();
 
    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =

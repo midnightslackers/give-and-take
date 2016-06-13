@@ -221,6 +221,7 @@ router
       });
   })
   .put('/:userId', (req, res) => {
+    console.log('PUT', req.files);
     User
       .findOneAndUpdate(
         { _id: req.params.userId},

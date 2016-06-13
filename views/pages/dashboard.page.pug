@@ -56,4 +56,10 @@ block templates
             textarea.form-control.input-sm(name="message" rows="5" autocomplete="off" required)
           div.form-group
             input.btn.btn--secondary(type="submit" value="Send")
+      | {{else}}
+      form#image-uploader(action="/upload", name="uploadImage", method="post", enctype="multipart/form-data")
+        div.form-group
+          input(type="file", name="displayImage")
+        div.form-group
+          input#image-submit.btn.btn--secondary(type="submit" value="Send")
       | {{/if}}
