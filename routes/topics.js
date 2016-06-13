@@ -61,7 +61,7 @@ router
   });
 
   
-// Retrieve One Subtopic in Specified topic  !!! May have to change format of result
+// Retrieve One Subtopic in Specified topic
 
 router  
   .get('/:topicId/:subTopicId', (req, res) => {
