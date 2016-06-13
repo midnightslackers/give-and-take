@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Topic = require('../models/topic.model');
 const SubTopic = require('../models/subtopic.model');
+
 const router = module.exports = express.Router();
 const jsonParser = bodyParser.json();
 
@@ -90,7 +91,6 @@ router
       });
   });
 
-
 // POST new subtopic & Push new subtopic into a specific topic
 router
   .use(jsonParser)
@@ -128,7 +128,6 @@ router
         });
       });
   });
-
 
 //  POST major topics ADMIN ONLY***
 router

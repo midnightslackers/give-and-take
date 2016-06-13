@@ -39,7 +39,8 @@ router
         });
       });
   })
-// filter users by subtopic
+
+  // filter users by subtopic
   .get('/bysubtopic/:subtopicId', (req, res) => {
     User
       .find({
@@ -71,11 +72,9 @@ router
           error: err
         });
       });
-
   })
 
-// filter users by TOPIC
-
+  // filter users by TOPIC
   .get('/bytopic/:topicId', (req, res) => {
 
     Topic.findById(req.params.topicId)
@@ -167,10 +166,8 @@ router
           error: err
         });
       });
-
   })
 
-  // ===
   .get('/:userId', (req, res) => {
     User
       .findById(req.params.userId)
@@ -209,7 +206,7 @@ router
       .save()
       .then(user => {
         res.json({
-          status: 'posted',
+          status: 'success',
           result: user
         });
       }).catch(err => {

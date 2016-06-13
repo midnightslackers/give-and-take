@@ -1,10 +1,10 @@
 const express = require('express');
 const SubTopic = require('../models/subtopic.model');
+
 const router = module.exports = express.Router();
 
-// GET all Subtopics
-
-router  
+router
+  // GET all Subtopics
   .get('/', (req, res) => {
     SubTopic
       .find({})
@@ -31,9 +31,7 @@ router
         });
       });
   })
-  
-// GET one subtopic
-
+  // GET one subtopic
   .get('/:subId', (req, res) => {
     SubTopic
       .findById(req.params.subId)
