@@ -3,6 +3,8 @@ const SubTopic = require('../models/subtopic.model');
 
 const router = module.exports = express.Router();
 
+// check out comments in users.js router...
+
 router
   // GET all Subtopics
   .get('/', (req, res) => {

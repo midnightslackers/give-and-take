@@ -124,20 +124,12 @@ router
 
         delete input.password;
 
-        token.sign(foundUser)
-          .then(userObj => {
-            res.json({
-              status: 'success',
-              result: userObj
-            });
-          })
-          .catch(err => {
-            res.json({
-              status: 'error',
-              result: 'The username and password does not match.',
-              error: err
-            });
-          });
+        return token.sign(foundUser)
+      .then(userObj => {
+        res.json({
+          status: 'success',
+          result: userObj
+        });
       })
       .catch(err => {
         res.json({

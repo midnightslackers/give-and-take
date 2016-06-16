@@ -8,164 +8,63 @@ const SubTopic = require('../models/subtopic.model');
 const router = module.exports = express.Router();
 const jsonParser = bodyParser.json();
 
+// Http already has a statusCode, so I really don't see the
+// need to return a "response object" that has a status code.
+
+// I also don't think lack of data qualifies as an error,
+// but I've included some of them to show using throw
+
+// Using query parameters for filters reduces boilerplate repetition
+// of User.find and is more RESTy
+
+// Use throw with Promise chain and then use expresses next(err)
+// middleware feature to reduce boiler plate.
+
 router
-  .get('/', (req, res) => {
-    User
-      .find()
-      .populate({
-        path: 'skills',
-        populate: {
-          path: 'topic'
-        }
-      })
-      .then(users => {
-        let resObj = {
-          status: 'error',
-          result: 'There are no users yet. Post here to start adding some.'
-        };
-
-        if (users.length > 0) {
-          resObj.status = 'success';
-          resObj.result = users;
-        }
-
-        res.json(resObj);
-      })
-      .catch(err => {
-        res.json({
-          status: 'error',
-          result: 'Server error',
-          error: err
-        });
-      });
-  })
-
-  // filter users by subtopic
-  .get('/bysubtopic/:subtopicId', (req, res) => {
-    User
-      .find({
-        skills: req.params.subtopicId
-      })
-      .populate({
-        path: 'skills',
-        populate: {
-          path: 'topic'
-        }
-      })
-      .then(userList => {
-        let resObj = {
-          status: 'error',
-          result: 'There are no users with matching subtopic'
-        };
-
-        if (userList.length > 0) {
-          resObj.status = 'success';
-          resObj.result = userList;
-        }
-
-        res.json(resObj);
-      })
-      .catch(err => {
-        res.json({
-          status: 'error',
-          result: 'Server error',
-          error: err
-        });
-      });
-  })
-
-  // filter users by TOPIC
-  .get('/bytopic/:topicId', (req, res) => {
-
-    Topic.findById(req.params.topicId)
-      .then(foundTopic => {
-        if (foundTopic) return foundTopic;
-        else throw `TopicId: ${req.params.topicId} does not exist`;
-      })
-      .then(foundTopic => {
-        return SubTopic
+  .get('/', (req, res, next) => {
+    const query = {};
+    if( req.query.subtopicId ) query.subtopicId = req.query.subtopicId;
+    if( req.query.gender ) query.gender = req.query.gender;
+    
+    let queryPromise = null;
+    
+    if ( req.query.topicId ) {
+      queryPromise = SubTopic
           .find({
-            topic: foundTopic._id
-          });
-      })
-      .then(subList => {
-        if (subList) {
-
-          return subList.map(sub => {
-            return sub._id;
-          });
-        }
-        else {
-          throw `${foundTopic.name} has no subtopics`;
-        }
-      })
-      .then(subIdArray => {
-        User
-          .find({
-            skills: {
-              $in: subIdArray
-            }
+            topic: req.query.topicId
           })
+          .select('') // just need id's
+          .lean()
+          .then((subList = []) => {
+            query.skills = {
+              $in: subList.map(sub => sub._id)
+            };
+            return query;
+          });
+    }
+    else {
+      queryPromise = Promise.resolve(query);
+    }
+
+    queryPromise
+      .then( query => {
+        return User
+          .find(query)
           .populate({
             path: 'skills',
             populate: {
               path: 'topic'
             }
           })
-          .then(userList => {
-            let resObj = {
-              status: 'error',
-              result: 'There are no users with matching topic'
-            };
-
-            if (userList.length > 0) {
-              resObj.status = 'success';
-              resObj.result = userList;
-            }
-
-            res.json(resObj);
-          });
+          .lean();
       })
-      .catch(err => {
-        res.json({
-          status: 'error',
-          result: 'Server error',
-          error: err
-        });
-      });
-  })
-
-  .get('/bygender/:gender', (req, res) => {
-    User
-      .find({
-        gender: req.params.gender
+      .then(users => {
+        if (!users || !users.length) throw 'There are no users yet. Post here to start adding some.';
+        res.json(users);
       })
-      .populate({
-        path: 'skills',
-        populate: {
-          path: 'topic'
-        }
-      })
-      .then(userList => {
-        let resObj = {
-          status: 'error',
-          result: 'There are no users with matching gender'
-        };
-
-        if (userList.length > 0) {
-          resObj.status = 'success';
-          resObj.result = userList;
-        }
-
-        res.json(resObj);
-      })
-      .catch(err => {
-        res.json({
-          status: 'error',
-          result: 'Server error',
-          error: err
-        });
-      });
+      // create a custom next error handling middleware 
+      // and you don't have to repeat this
+      .catch(next);
   })
 
   .get('/:userId', (req, res) => {
@@ -294,31 +193,18 @@ router
     User
       .findById(req.body.recipientId)
       .then(user => {
-        if (user) {
-          notification.send(
+        if (!user) throw `RESOURCE NOT FOUND: ${req.body.recipientId} does not exist.`;
+        return notification.send(
             user.username,
             req.body.senderEmail,
             req.body.senderName,
-            req.body.message,
-            (err, json) => {
-              if (err) {
-                res.json({
-                  status: 'error',
-                  result: 'There was a problem sending the message',
-                  error: err
-                });
-              } else {
-                res.json({
-                  status: 'success',
-                  result: json
-                });
-              }
-            });
-        } else {
-          res.json({
-            status: 'error',
-            result: `RESOURCE NOT FOUND: ${req.body.recipientId} does not exist.`
-          });
-        }
-      });
+            req.body.message);
+      })
+      .then(json => {
+        res.json({
+          status: 'success',
+          result: json
+        });
+      })
+      .catch(next);
   });
