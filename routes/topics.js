@@ -52,13 +52,7 @@ router
 
         res.json(resObj);
       })
-      .catch(err => {
-        res.json({
-          status: 'error',
-          result: 'Server error',
-          error: err
-        });
-      });
+      .catch(next);
   });
 
 // Retrieve One Subtopic in Specified topic
@@ -82,13 +76,7 @@ router
         res.json(resObj);
 
       })
-      .catch(err => {
-        res.json({
-          status: 'error',
-          result: 'Server error',
-          error: err
-        });
-      });
+      .catch(next);
   });
 
 // POST new subtopic & Push new subtopic into a specific topic
@@ -97,40 +85,30 @@ router
   .post('/:topicId', (req, res) => {
     new SubTopic(req.body)
       .save()
+      //chain to avoid nesting
       .then(sub => {
-        Topic
+        return Topic
           .findOne({
             _id: req.params.topicId
           })
-          .then(topic => {
-            topic.subTopics.push(sub._id);
-            return topic.save();
-          })
-          .then(topic => {
-            res.json({
-              status: 'success',
-              result: topic
-            });
-          })
-          .catch(err => {
-            res.json({
-              status: 'error',
-              result: 'Server error',
-              error: err
-            });
-          });
+      .then(topic => {
+        topic.subTopics.push(sub._id);
+        return topic.save();
       })
-      .catch(err => {
+      .then(topic => {
         res.json({
-          status: 'error',
-          result: 'Server error',
-          error: err
+          status: 'success',
+          result: topic
         });
-      });
+      })
+      .catch(next);
   });
 
 //  POST major topics ADMIN ONLY***
+// but how is that enforced??? :(
 router
+    // why extra indent?
+    // I think this use applies to everything after because same router object
     .use(jsonParser)
     .post('/', (req, res) => {
       new Topic(req.body)
@@ -140,11 +118,6 @@ router
             status: 'success',
             result: topic
           });
-        }).catch(err => {
-          res.json({
-            status:'error',
-            result: 'server err',
-            error: err
-          });
-        });
-    });
+        })
+        .catch(next);
+    })

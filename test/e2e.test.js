@@ -8,6 +8,8 @@ const databaseConnection = database.connect(process.env.MONGODB_URI);
 
 chai.use(chaiHttp);
 
+// good work putting in some api tests!
+
 describe('End to End Testing', () => {
   let request = chai.request(app);
   let user1 = {
@@ -142,6 +144,9 @@ describe('End to End Testing', () => {
         .set('Content-Type', 'application/json')
         .send(user1)
         .end(err => {
+          // don't forget this!
+          if (err) return done(err);
+
           let actual = err.response.body;
 
           assert.property(actual, 'status');
@@ -164,6 +169,8 @@ describe('End to End Testing', () => {
           password: 'wrong'
         })
         .end(err => {
+          if (err) return done(err);
+
           let actual = err.response.body;
 
           assert.property(actual, 'status');
@@ -184,6 +191,8 @@ describe('End to End Testing', () => {
           password: 'test123'
         })
         .end((err) => {
+          if (err) return done(err);
+
           let actual = err.response.body;
 
           assert.property(actual, 'status');
@@ -244,19 +253,23 @@ describe('End to End Testing', () => {
     });
 
     it.skip('Posts one user to users collection', done => {
-      let myUserName = 'Johnny';
-      let myPassword = '123';
+      // use `const` if the variable will not be reassigned
+      const username = 'Johnny';
+      const password = '123';
 
       request
         .post('/api/users')
         .set('content-type', 'application/json')
         .set('token', token)
         .send({
-          username: myUserName,
-          password: myPassword
+          // use same name for simpler syntax
+          username,
+          password
         })
         .end((err, res) => {
-          let resObj = JSON.parse(res.text);
+          if (err) return done(err);
+
+          let resObj = res.body;
 
           assert.equal(res.status, 200);
           assert.property(resObj, 'status');
@@ -342,7 +355,7 @@ describe('End to End Testing', () => {
           'password': 'secret123'
         })
         .end((err, res) => {
-          let resObj = JSON.parse(res.text);
+          let resObj = res.body;
 
           assert.equal(resObj.result, expected);
 

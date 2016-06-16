@@ -5,6 +5,8 @@ const assert = chai.assert;
 
 describe('Unit Testing', () => {
 
+  // What about Topic and Subtopic testing???
+  
   describe('User Model', () => {
 
     it('Validates required username field', done => {

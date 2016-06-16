@@ -6,7 +6,7 @@ G&T has a simple goal: to learn from each other. We believe that learning should
 
 1. Install [Node.js](https://nodejs.org/en/).
 2. Install [MongoDB](https://docs.mongodb.com/manual/installation/)
-3. Install [npm](https://www.npmjs.com/)
+3. Install [npm](https://www.npmjs.com/) technically gets installed with node, yes?
 4. Run `git clone https://github.com/midnightslackers/give-and-take.git`
 5. Run `cd give-and-take`.
 6. Run `npm install`.
@@ -18,7 +18,7 @@ G&T has a simple goal: to learn from each other. We believe that learning should
   - `SENGRID_API_KEY=[your sengrid api key]`
 9. Run `npm run dev`.
 
-
+Very nice dev setup instructions, nice api summary too
 
 ## API
 
@@ -35,6 +35,8 @@ GET /api/users
 ```
 GET /api/users/:userId
 ```
+
+For REST, these filters should query parameters, not path parts
 
 #### Retrieve Users by Subtopic
 
